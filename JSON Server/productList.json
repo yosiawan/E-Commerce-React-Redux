@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "a",
+      "password": "a"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "Laptop 1",
+      "price": 25000
+    },
+    {
+      "id": 2,
+      "name": "Laptop 2",
+      "price": "35000"
+    },
+    {
+      "id": 3,
+      "name": "Laptop 3",
+      "price": "45000"
+    }
+  ]
+}
