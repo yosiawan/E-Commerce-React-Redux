@@ -34,15 +34,16 @@ class Header extends Component {
         this.getRenderCategory()
     }
 
-    componentWillReceiveProps(newProps) {
-        if(newProps.auth.username === "") {
-            // console.log(newProps.auth.username !== "")
-            cookies.remove('LoggedInUser');
-        }
-        if(newProps.admin.username === "") {
-            cookies.remove('LoggedInAdmin');
-        }
-    }
+    // componentWillReceiveProps(newProps) {
+    //     console.log(newProps)
+    //     if(newProps.auth.username === "") {
+    //         console.log("masuk pak eko")
+    //         cookies.remove('LoggedInUser');
+    //     }
+    //     if(newProps.admin.username === "") {
+    //         cookies.remove('LoggedInAdmin');
+    //     }
+    // }
 
     onSearchBtnClick=()=>{
         // console.log(this.refs.search.value)
@@ -55,10 +56,12 @@ class Header extends Component {
 
     onLogOutClick = () => {
         this.props.onLogout();
+        cookies.remove('LoggedInUser');
     }
 
     onAdminLogOutClick = () => {
         this.props.onAdminLogout();
+        cookies.remove('LoggedInAdmin');
     }
 
     getRenderCategory(){
@@ -189,18 +192,14 @@ class Header extends Component {
                     </NavItem>
                 </Nav>
                 <Nav pullRight>
-                    <NavItem  href="/login">
-                        Login
-                    </NavItem>
-                    <NavItem  href="/adminlogin">
-                        Admin Login
-                    </NavItem>
-                    <NavItem href="/register">
-                        Register
-                    </NavItem>
-                    <NavItem href="/adminregister">
-                        Admin Register
-                    </NavItem>
+                    <NavDropdown title="Login" id="basic-nav-dropdown">
+                        <MenuItem href="/login">Login as User</MenuItem>
+                        <MenuItem href="/adminlogin">Login as Admin</MenuItem>
+                    </NavDropdown>
+                    <NavDropdown title="Register" id="basic-nav-dropdown">
+                        <MenuItem href="/register">Register as User</MenuItem>
+                        <MenuItem href="/adminregister">Register as Admin</MenuItem>
+                    </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>);

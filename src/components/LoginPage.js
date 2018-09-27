@@ -10,6 +10,7 @@ const cookies = new Cookies();
 class LoginPage extends Component {
 
     componentWillReceiveProps(newProps) {
+        console.log(newProps)
         if(newProps.auth.username !== "") {
             cookies.set('LoggedInUser', newProps.auth.username, { path: '/' });
             console.log(cookies.get('LoggedInUser'))
