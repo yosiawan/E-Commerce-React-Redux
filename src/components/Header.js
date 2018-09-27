@@ -156,10 +156,8 @@ class Header extends Component {
                     </Nav>
                     <Nav pullRight>
                         <NavDropdown title={"Hello, Admin " + this.props.admin.username} id="basic-nav-dropdown">
-                            <NavItem>
-                                <a href="/admin">
-                                    Dashboard
-                                </a>
+                            <NavItem href="/admin">
+                                Dashboard
                             </NavItem>
                             <MenuItem divider />
                             <MenuItem onSelect={this.onAdminLogOutClick}>Log Out Admin</MenuItem>
