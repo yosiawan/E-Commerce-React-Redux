@@ -183,8 +183,6 @@ class Header extends Component {
                 <Nav>
                     <NavDropdown title="Categories" id="basic-nav-dropdown">
                         {this.renderCategory()}
-                        <MenuItem divider />
-                        <MenuItem  >Kutang</MenuItem>
                     </NavDropdown>
                     <NavItem>
                         <input ref='search' type='text' placeholder='Product Name'/>
@@ -194,10 +192,12 @@ class Header extends Component {
                 <Nav pullRight>
                     <NavDropdown title="Login" id="basic-nav-dropdown">
                         <MenuItem href="/login">Login as User</MenuItem>
+                        <MenuItem divider />
                         <MenuItem href="/adminlogin">Login as Admin</MenuItem>
                     </NavDropdown>
                     <NavDropdown title="Register" id="basic-nav-dropdown">
                         <MenuItem href="/register">Register as User</MenuItem>
+                        <MenuItem divider />
                         <MenuItem href="/adminregister">Register as Admin</MenuItem>
                     </NavDropdown>
                 </Nav>
