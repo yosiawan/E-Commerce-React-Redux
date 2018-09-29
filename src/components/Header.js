@@ -14,9 +14,9 @@ class Header extends Component {
     
     componentWillMount() {
         const cookieNya = cookies.get('LoggedInUser');
-        console.log(cookieNya);
+        // console.log(cookieNya);
         if(cookieNya !== undefined) {
-            console.log(cookieNya !== undefined)
+            // console.log(cookieNya !== undefined)
             this.props.keepLogin(cookieNya);
         }
         else {
@@ -45,11 +45,7 @@ class Header extends Component {
     //     }
     // }
 
-    onSearchBtnClick=()=>{
-        // console.log(this.refs.search.value)
-        this.props.productSearch(this.refs.search.value)
-        console.log(this.props.searchResult.searchResult)
-    }
+    
     selectedCategory(id){
         cookies.set('SelectedCategory', id, { path: '/' });
     }
@@ -111,12 +107,9 @@ class Header extends Component {
                     <Nav>
                         <NavDropdown  title="Categories" id="basic-nav-dropdown">
                             {this.renderCategory()}
-                            <MenuItem divider />
-                            <MenuItem>Kutang</MenuItem>
                         </NavDropdown>
-                        <NavItem>
-                            <input ref='search' type='text' placeholder='Product Name'/>
-                            <input type='button' value='Search'/>
+                        <NavItem href='/searchResult'>
+                            Search
                         </NavItem>
                     </Nav>
                     <Nav pullRight>
@@ -146,12 +139,9 @@ class Header extends Component {
                     <Nav>
                         <NavDropdown  title="Categories" id="basic-nav-dropdown">
                             {this.renderCategory()}
-                            <MenuItem divider />
-                            <MenuItem>Kutang</MenuItem>
                         </NavDropdown>
-                        <NavItem>
-                            <input ref='search' type='text' placeholder='Product Name'/>
-                            <input type='button' value='Search'/>
+                        <NavItem href='/searchResult'>
+                            Search
                         </NavItem>
                     </Nav>
                     <Nav pullRight>
@@ -182,9 +172,8 @@ class Header extends Component {
                     <NavDropdown title="Categories" id="basic-nav-dropdown">
                         {this.renderCategory()}
                     </NavDropdown>
-                    <NavItem>
-                        <input ref='search' type='text' placeholder='Product Name'/>
-                        <input onClick={this.onSearchBtnClick} type='button' value='Search'/>
+                    <NavItem href='/searchResult'>
+                        Search
                     </NavItem>
                 </Nav>
                 <Nav pullRight>
@@ -204,13 +193,12 @@ class Header extends Component {
     }
     render() {
         // console.log(typeof(this.props.searchResult.searchResult) !== 'string')
-        if(this.props.searchResult.searchResult == null){
             return( 
-                this.renderNavbar()
+                <div>
+                    {this.renderNavbar()}
+                </div>
             );
-        }
-        return <Redirect to="/searchResult"/>
-        
+            
     }
 }
 

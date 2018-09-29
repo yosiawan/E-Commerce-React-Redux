@@ -88,6 +88,7 @@ export const addToCart = (product) => {
 }
 
 export const getCategories = () => {
+    console.log('data di get')
     return(dispatch) => {
         axios.get('http://localhost:1002/categories')
         .then(ok=>{
@@ -116,8 +117,8 @@ export const productSearch = (search) => {
                     payload: {searchResult: "Product Not Found"}
                 })
             }else if(ok.data.length > 0){
-                console.log(ok.data.length);
-                console.log(ok.data)
+                // console.log(ok.data.length);
+                // console.log(ok.data)
                 dispatch({
                     type: "Search Success",
                     payload: {searchResult: ok.data}
@@ -165,7 +166,7 @@ export const keepAdminLogin = (username) => {
                 username: username
             }
         }).then(user => {
-            console.log(user)
+            // console.log(user)
             dispatch({
                 type: "ADMIN_LOGIN_SUCCESS", 
                 payload: { username: user.data[0].username, error: "" }

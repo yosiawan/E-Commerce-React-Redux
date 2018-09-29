@@ -3,13 +3,13 @@ import Axios from 'axios';
 import { API_URL_1 } from '../supports/api-url/apiurl';
 import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import '../supports/css/bootstrap.css'
 
 class Dashboard extends Component {
     state={products:[], editedItemID:0};
 
     componentWillMount(){
-        Axios.get("http://localhost:1002/products")
+        Axios.get("http://localhost:1002/productsDetails")
         .then(ok=>{
             this.setState({products:ok.data, editedItemID : 0})
             console.log(this.state.products)
@@ -60,11 +60,22 @@ class Dashboard extends Component {
             //fill with details
             ProductName: this.refs.AddProductName.value,
             ProductPrice: this.refs.AddProductPrice.value,
-            Category: this.refs.AddCategory.value
+            // Category: this.refs.AddCategory.value,
+            Description: this.refs.AddDescription.value,
+            RAM: this.refs.AddRAM.value,
+            Storage: this.refs.AddStorage.value,
+            Stock: this.refs.AddStock.value
         }).then((res)=>{
-            alert(res.data);
-            this.setState({products: res.data});
-            console.log(res.data)
+            Axios.get("http://localhost:1002/productsDetails")
+            .then(ok=>{
+                this.setState({products:ok.data, editedItemID : 0})
+                console.log(this.state.products)
+            })
+            console.log(res.data);
+            // var id = ['1','2','3','4','5','6']
+            // id.map(data=>{
+            //     document.getElementById(data).reset();
+            // })
         }).catch((err)=>{
             alert('Error');
             console.log(err)
@@ -77,11 +88,15 @@ class Dashboard extends Component {
     }
 
     onSaveBtnClick=(id)=>{
+        console.log(this.refs.editStock.value)
         Axios.put(`http://localhost:1002/products/${id}`, {
             //fill with details
             ProductName: this.refs.editNama.value,
             ProductPrice: this.refs.editPrice.value,
-            Category: this.refs.editCategory.value
+            Description: this.refs.editDescription.value,
+            RAM: this.refs.editRAM.value,
+            Storage: this.refs.editStorage.value,
+            Stock: this.refs.editStock.value
         }).then((res)=>{
             alert('edit sakses');
             this.setState({products: res.data, editedItemID:0});
@@ -92,11 +107,10 @@ class Dashboard extends Component {
         })
     }
 
-    // Code below is just for structural guidance
     renderTabelProduct = () => {
         // console.log('render karyawan berjalan')
         const arrJSX = this.state.products.map((products, key)=>{
-            // console.log(this.state.editedItemID)
+            console.log(products)
             if(this.state.editedItemID == products.idproducts){
                 return(
                     <tr key={key}>
@@ -104,11 +118,16 @@ class Dashboard extends Component {
                     <td><input type='text' ref='editNama' defaultValue={products.ProductName}/></td>
                     <td>Rp.<input type='number' ref='editPrice'defaultValue={products.ProductPrice}/></td>
                     <td>
-                        <select ref='editCategory' >
+                        {/* <select ref='editCategory' >
                             <option defaultValue={products.idCategory}>Pilih Category</option>
                             {this.renderOptionCategory()}
-                        </select>
+                        </select> */}
                     </td>
+                    <td><input type='text' ref='editDescription' defaultValue={products.Description}/></td>
+                    <td><input type='number' ref='editRAM'defaultValue={products.RAM}/></td>
+                    <td><input type='number' ref='editStorage'defaultValue={products.Storage}/></td>
+                    <td><input type='number' ref='editStock'defaultValue={products.Stock}/></td>
+
                     <td>
                         <input type='button' onClick={()=>this.onSaveBtnClick(products.idproducts)} value='Save'/>
                         <input type='button' onClick={this.onCancelBtnClick} value='Cancel'/>
@@ -118,10 +137,15 @@ class Dashboard extends Component {
             }
             return(
                 <tr key={key}>
-                    <td>{products.id}</td>
+                    <td>{products.idproducts}</td>
                     <td>{products.ProductName}</td>
                     <td>Rp.{products.ProductPrice}</td>
                     <td>{products.Category}</td>
+                    <td>{products.Description}</td>
+                    <td>{products.RAM}</td>
+                    <td>{products.Storage}</td>
+                    <td>{products.Stock}</td>
+
                     <td>
                         <input type='button' onClick={()=>this.onEditBtnCLick(products.idproducts)} value='Edit'/>
                         <input type='button' onClick={()=>this.onDeleteBtnCLick(products.idproducts)} value='Delete'/>
@@ -153,7 +177,6 @@ class Dashboard extends Component {
     //     })
     //     return arrJSX;
     // }
-    // structural guidance ends here
 
     render() {
         console.log(this.props.admin.username)
@@ -164,9 +187,7 @@ class Dashboard extends Component {
                     <br/>
                     <br/>
                     <br/>
-                    <br/>
-                    <br/>
-                    <br/>
+                
                     {/* <div>
                     <label>Cabang : </label> 
                     <select ref='cabangSearch'>
@@ -188,30 +209,40 @@ class Dashboard extends Component {
                 </div>
                 <input type='button' onClick={this.onSearchBtnClick} value='Search'/> */}
 
-                <table className='table striped condensed responsive' responsive>
+                <table  responsive>
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>ProductName</th>
                             <th>ProductPrice</th>
                             <th>Category</th>
+                            <th>Description</th>
+                            <th>RAM</th>
+                            <th>Storage</th>
+                            <th>Stock</th>
                             <th>Edit</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         {this.renderTabelProduct()}
                         <th></th>
                     </tbody>
-                    <tfoot>
+
+                    <tfoot >
                         <td></td>
-                        <td><input type='text' ref='AddProductName'/></td>
-                        <td><input type='number' ref='AddProductPrice'/></td>
+                        <td><input id='1' type='text' ref='AddProductName'/></td>
+                        <td><input id='2'type='number' ref='AddProductPrice'/></td>
                         <td>
-                            <select ref='AddCategory'>
+                            {/* <select id='3'ref='AddCategory'>
                                 <option value=''>Pilih Category</option>
                                 {this.renderOptionCategory()}
-                            </select>
+                            </select> */}
                         </td>
+                        <td><input id='4'type='text' ref='AddDescription' /></td>
+                        <td><input id='5'type='number' ref='AddRAM'/></td>
+                        <td><input id='6'type='number' ref='AddStorage'/></td>
+                        <td><input id='7'type='number' ref='AddStock'/></td>
                         <td>
                             <input type='button' onClick={this.onAddBtnClick} value='add'/>
                         </td>
