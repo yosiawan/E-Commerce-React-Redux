@@ -57,8 +57,10 @@ class ProductDetails extends Component {
             idproducts, 
             ProductName, 
             ProductPrice, 
-            amount
+            amount,
+            username: this.props.auth.username
         }).then(ok=>{
+            console.log(ok.data)
             this.setState({cart: ok.data})
         }).catch(err=>{
             console.log(err)
@@ -142,6 +144,65 @@ class ProductDetails extends Component {
         // insert redirecting function here
     }
 
+    cartPopUp = () => {
+        console.log(this.props.auth)
+        if (this.props.auth === undefined) {
+            return(
+                <div>
+                    <h3>Please Wait</h3>
+                </div>
+                
+            )
+        }
+        else if(this.props.auth.username == ''){
+            return(
+                <div>
+                    <Modal.Header closeButton>
+                        <Modal.Title>You are not Logged In</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Please Log in <a href="/login">here</a>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.handleClose}>Close</Button>
+                    </Modal.Footer>
+                </div>
+            )
+        }
+        return(
+            <div>
+                <Modal.Header closeButton>
+                    <Modal.Title>Your Cart</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ProductName</th>
+                                <th>Price</th>
+                                <th>Amount</th>
+                                <th>Total Price</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.renderCart()}
+                        </tbody>
+                        <tfoot>
+                            <th>GrandTotal</th>
+                            <th></th>
+                            <th></th>
+                            <th>{this.renderGrandTotal()}</th>
+                        </tfoot>
+                    </table>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button href='/checkoutPage'>Checkout</Button>
+                    <Button onClick={this.handleClose}>Continue Shopping</Button>
+                </Modal.Footer>
+            </div>
+        )
+    }
     render(){
         if (this.state.product === null) {
             return(
@@ -198,36 +259,10 @@ class ProductDetails extends Component {
                 </div>
 
                 <Modal show={this.state.show} onHide={this.handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Your Cart</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>ProductName</th>
-                                    <th>Price</th>
-                                    <th>Amount</th>
-                                    <th>Total Price</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.renderCart()}
-                            </tbody>
-                            <tfoot>
-                                <th>GrandTotal</th>
-                                <th></th>
-                                <th></th>
-                                <th>{this.renderGrandTotal()}</th>
-                            </tfoot>
-                        </table>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={this.checkout}>Checkout</Button>
-                        <Button onClick={this.handleClose}>Continue Shopping</Button>
-                    </Modal.Footer>
-                    </Modal>
+                    
+                    {this.cartPopUp()}
+                    
+                </Modal>
             </div>
         )
         

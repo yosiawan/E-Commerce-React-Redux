@@ -75,7 +75,9 @@ class Header extends Component {
     renderCategory(){
         return(
             this.state.categoryList.map(data=>{
-                // console.log(data.Category)
+                console.log(data.Category)
+                console.log(data.idCategory)
+
                 // console.log('mapping render berjalan')
                 return(
                     <MenuItem href='/categoryPage' onClick={()=>this.selectedCategory(data.idCategory)}>
@@ -114,10 +116,8 @@ class Header extends Component {
                     </Nav>
                     <Nav pullRight>
                         <NavDropdown title={"Hello, " + this.props.auth.username} id="basic-nav-dropdown">
-                            <NavItem>
-                                <Link to="/cart">
+                            <NavItem href="/checkoutPage">
                                 Cart
-                                </Link>
                             </NavItem>
                             <MenuItem divider />
                             <MenuItem onSelect={this.onLogOutClick}>Log Out</MenuItem>

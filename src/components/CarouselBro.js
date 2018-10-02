@@ -12,12 +12,10 @@ class CarouselBro extends Component {
                 </h3> */}
                 <Carousel className=' carousselAdjuster timpaCSScaroussel' infiniteLoop={true} showThumbs={false} autoPlay={true}>
                     
-                    <div className='geser'>
-                        <Link to="/productDetails1">
-                            <div>
-                                <img src={XPS15} alt=''/>
-                            </div>
-                        </Link>
+                    <div href='/productDetails' className='geser'>
+                            <a href='/productDetails'>
+                                <img href='/productDetails' src={XPS15} alt=''/>
+                            </a>
                     {/* <p className="legend">{this.props.legend1}</p> */}
                     </div>
                 
