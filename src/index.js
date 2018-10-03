@@ -12,7 +12,13 @@ import './supports/css/bootstrap.min.css';
 import './supports/css/agency.min.css';
 import './supports/font-awesome/css/font-awesome.min.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import WebFont from 'webfontloader';
 
+WebFont.load({
+  google: {
+    families: ['Titillium Web:300,400,700', 'sans-serif']
+  }
+});
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
 ReactDOM.render(
