@@ -41,7 +41,9 @@ class CategoryPage extends Component {
                         <p>{data.description}</p><br/>
                         <p>{data.ProductPrice}</p>
                         <p>
-                            <Button href="/productDetails" onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">Details</Button>
+                            <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
+                                <Link to="/productDetails">Details</Link>
+                            </Button>
                             &nbsp;
                             {/* <Button bsStyle="default">Buy</Button> */}
                         </p>

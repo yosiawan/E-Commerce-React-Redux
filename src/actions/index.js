@@ -82,9 +82,7 @@ export const addToCart = (product) => {
     return{
         type:"Product_Selected",
         payload : { product }
-    }
-        
-    
+    }    
 }
 
 export const getCategories = () => {
@@ -117,8 +115,7 @@ export const productSearch = (search) => {
                     payload: {searchResult: "Product Not Found"}
                 })
             }else if(ok.data.length > 0){
-                // console.log(ok.data.length);
-                // console.log(ok.data)
+                console.log(ok.data)
                 dispatch({
                     type: "Search Success",
                     payload: {searchResult: ok.data}
@@ -199,11 +196,14 @@ export const onAdminRegister = (user) => {
     return (dispatch) => {
         axios.post('http://localhost:1002/adminregister', user)
         .then((res) => {
+            if(res.data == "Username already exists"){
+                // bikin dispatch yang ngisi gstate dng error: "Username already exists"
+            }
             console.log(res);
-            dispatch({
-                type: "ADMIN_LOGIN_SUCCESS", 
-                payload: { username: res.data.username, email: res.data.email, error: "" }
-            });
+            // dispatch({
+            //     type: "ADMIN_LOGIN_SUCCESS", 
+            //     payload: { username: res.data.username, email: res.data.email, error: "" }
+            // });
         })
         .catch((err) => {
             console.log(err);

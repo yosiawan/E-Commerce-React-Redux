@@ -10,28 +10,28 @@ const cookies = new Cookies();
 
 class Header extends Component {
 
-    state={ categoryList:[] }
+    state={ categoryList:[], brandList:[] }
     
     componentWillMount() {
+        this.getRenderCategory()
+        this.getBrands()
+
         const cookieNya = cookies.get('LoggedInUser');
-        // console.log(cookieNya);
         if(cookieNya !== undefined) {
-            // console.log(cookieNya !== undefined)
             this.props.keepLogin(cookieNya);
         }
         else {
             this.props.cookieChecked();
         }
-        this.getRenderCategory()
+        
         const cookieNyaAdmin = cookies.get('LoggedInAdmin');
-        // console.log(cookieNyaAdmin);
         if(cookieNyaAdmin !== undefined) {
             this.props.keepAdminLogin(cookieNyaAdmin);
         }
         else {
             this.props.cookieAdminChecked();
         }
-        this.getRenderCategory()
+        // this.getRenderCategory()
     }
 
     // componentWillReceiveProps(newProps) {
@@ -45,10 +45,12 @@ class Header extends Component {
     //     }
     // }
 
-    
-    selectedCategory(id){
-        cookies.set('SelectedCategory', id, { path: '/' });
-    }
+    // componentWillReceiveProps(newProps) {
+    //         console.log(newProps)
+    //         if(this.props.searchResult.searchResult !== null){
+    //             return <Redirect to='/searchResult'/>
+    //         }
+    //     }
 
     onLogOutClick = () => {
         this.props.onLogout();
@@ -58,6 +60,14 @@ class Header extends Component {
     onAdminLogOutClick = () => {
         this.props.onAdminLogout();
         cookies.remove('LoggedInAdmin');
+    }
+        
+    selectedCategory(id){
+        cookies.set('SelectedCategory', id, { path: '/' });
+    }
+
+    selectedBrand(id){
+        cookies.set('SelectedBrand', id, { path: '/' });
     }
 
     getRenderCategory(){
@@ -80,15 +90,39 @@ class Header extends Component {
 
                 // console.log('mapping render berjalan')
                 return(
-                    <MenuItem href='/categoryPage' onClick={()=>this.selectedCategory(data.idCategory)}>
-                        {data.Category}
+                    <MenuItem onClick={()=>this.selectedCategory(data.idCategory)}>
+                        <Link to='/categoryPage'>
+                            {data.Category}
+                        </Link>
                     </MenuItem>
                 )
             })
         )
     }
 
+    getBrands(){
+        Axios.get('http://localhost:1002/brands')
+        .then(ok=>{
+            // console.log(ok.data)
+            this.setState({brandList : ok.data})
+            // console.log(this.state.categoryList)
+        }).catch(err=>{
+            console.log('render brands gagal')
+            // console.log(err)
+        })
+    }
 
+    renderBrands(){
+        return this.state.brandList.map(data=>{
+            return(
+                <MenuItem onClick={()=>this.selectedBrand(data.idBrand)}>
+                    <Link to='/brandPage'>
+                        {data.Brand}
+                    </Link>
+                </MenuItem>
+            )
+        })
+    }
 
     // Kalau ada masalah dengan routing / otentikasi page, cek apakah menggunakan <Link> atau href='/', 
     // metode href='/' + <MenuItem> tdk dapat digunakan pada bagian dashboard
@@ -99,9 +133,9 @@ class Header extends Component {
             return (<Navbar fixedTop={true} collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand >
-                        <a href="/">
-                            Xiaomai
-                        </a>
+                        <Link to='/'>
+                            Xiao mai
+                        </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
@@ -110,14 +144,24 @@ class Header extends Component {
                         <NavDropdown  title="Categories" id="basic-nav-dropdown">
                             {this.renderCategory()}
                         </NavDropdown>
-                        <NavItem href='/searchResult'>
-                            Search
+                        <NavDropdown  title="Brands" id="basic-nav-dropdown">
+                            {this.renderBrands()}
+                        </NavDropdown>
+                        <NavItem>
+                            <input ref='Search' type='text'/>
+                        </NavItem>
+                        <NavItem onClick={()=>this.props.productSearch(this.refs.Search.value)} >
+                            <Link to='/searchResult'>
+                                Search
+                            </Link>
                         </NavItem>
                     </Nav>
                     <Nav pullRight>
                         <NavDropdown title={"Hello, " + this.props.auth.username} id="basic-nav-dropdown">
-                            <NavItem href="/checkoutPage">
-                                Cart
+                            <NavItem >
+                                <Link to="/checkoutPage" >
+                                    Cart
+                                </Link>
                             </NavItem>
                             <MenuItem divider />
                             <MenuItem onSelect={this.onLogOutClick}>Log Out</MenuItem>
@@ -129,9 +173,9 @@ class Header extends Component {
             return (<Navbar fixedTop={true} collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand >
-                        <a href="/">
-                            Xiaomai
-                        </a>
+                        <Link to='/'>
+                            Xiao mai
+                        </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                 </Navbar.Header>
@@ -140,14 +184,26 @@ class Header extends Component {
                         <NavDropdown  title="Categories" id="basic-nav-dropdown">
                             {this.renderCategory()}
                         </NavDropdown>
-                        <NavItem href='/searchResult'>
-                            Search
+                        <NavDropdown  title="Brands" id="basic-nav-dropdown">
+                            {this.renderBrands()}
+                        </NavDropdown>
+                        <NavItem>
+                            <input ref='Search' type='text' />
+                        </NavItem>
+                        <NavItem onClick={()=>this.props.productSearch(this.refs.Search.value)} >
+                            <Link to='/searchResult'>
+                            <Link to ></Link>
+
+                                Search
+                            </Link>
                         </NavItem>
                     </Nav>
                     <Nav pullRight>
                         <NavDropdown title={"Hello, Admin " + this.props.admin.username} id="basic-nav-dropdown">
-                            <NavItem href="/admin">
-                                Dashboard
+                            <NavItem >
+                                <Link to="/admin" >
+                                    Dashboard
+                                </Link>
                             </NavItem>
                             <MenuItem divider />
                             <MenuItem onSelect={this.onAdminLogOutClick}>Log Out Admin</MenuItem>
@@ -161,9 +217,9 @@ class Header extends Component {
         <Navbar fixedTop={true} collapseOnSelect>
             <Navbar.Header >
                 <Navbar.Brand >
-                    <a href="/">
-                        Xiaomai
-                    </a>
+                    <Link to='/'>
+                        Xiao mai
+                    </Link>
                 </Navbar.Brand>
                 <Navbar.Toggle />
             </Navbar.Header>
@@ -172,24 +228,49 @@ class Header extends Component {
                     <NavDropdown title="Categories" id="basic-nav-dropdown">
                         {this.renderCategory()}
                     </NavDropdown>
-                    <NavItem href='/searchResult'>
-                        Search
+                    <NavDropdown  title="Brands" id="basic-nav-dropdown">
+                        {this.renderBrands()}
+                    </NavDropdown>
+                    <NavItem>
+                        <input ref='Search' type='text' />
+                    </NavItem>
+                    <NavItem onClick={()=>this.props.productSearch(this.refs.Search.value)} >
+                        <Link to='/searchResult'>
+                            Search
+                        </Link>
                     </NavItem>
                 </Nav>
                 <Nav pullRight>
                     <NavDropdown title="Login" id="basic-nav-dropdown">
-                        <MenuItem href="/login">Login as User</MenuItem>
+                        <MenuItem >
+                            <Link to="/login" >
+                                Login as User
+                            </Link>
+                        </MenuItem>
                         <MenuItem divider />
-                        <MenuItem href="/adminlogin">Login as Admin</MenuItem>
+                        <MenuItem >
+                            <Link to="/adminlogin" >
+                                Login as Admin
+                            </Link>
+                        </MenuItem>
                     </NavDropdown>
                     <NavDropdown title="Register" id="basic-nav-dropdown">
-                        <MenuItem href="/register">Register as User</MenuItem>
+                        <MenuItem >
+                            <Link to="/register" >
+                                Register as User
+                            </Link>
+                        </MenuItem>
                         <MenuItem divider />
-                        <MenuItem href="/adminregister">Register as Admin</MenuItem>
+                        <MenuItem >
+                            <Link to="/adminregister" >
+                                Register as Admin
+                            </Link>
+                        </MenuItem>
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
-        </Navbar>);
+        </Navbar>
+        );
     }
     render() {
         // console.log(typeof(this.props.searchResult.searchResult) !== 'string')

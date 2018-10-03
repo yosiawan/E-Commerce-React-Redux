@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import HomePage from './components/HomePage';
@@ -15,19 +15,20 @@ import SearchResult from './components/SearchResult';
 import AdminLoginPage from './components/AdminLoginPage';
 import AdminRegisterPage from './components/AdminRegisterPage';
 import CheckoutPage from './components/CheckoutPage';
+import BrandPage from './components/BrandPage';
 
 
 class App extends Component {
     state={listKaryawan:[], listCabang:[], editedItemID:0, test:true};
 
     componentWillMount(){
-        this.props.getCategories()
-        Axios.get('http://localhost:1001/Karyawan')
-        .then((res)=>{
-            console.log(res.data);
-            this.setState({listKaryawan:res.data.listKaryawan, listCabang:res.data.listCabang})
-            console.log(this.state.listKaryawan)
-        })
+        // this.props.getCategories()
+        // Axios.get('http://localhost:1001/Karyawan')
+        // .then((res)=>{
+        //     console.log(res.data);
+        //     this.setState({listKaryawan:res.data.listKaryawan, listCabang:res.data.listCabang})
+        //     console.log(this.state.listKaryawan)
+        // })
     }
 
     // onEditBtnCLick=(id)=>{
@@ -179,7 +180,7 @@ class App extends Component {
         return (
         <div className="App">
             <Header/>
-            {/* <div> */}
+            <div>
                 <Route exact path="/" component={HomePage}/>
                 <Route path="/login" component={LoginPage}/>
                 <Route path="/adminlogin" component={AdminLoginPage}/>
@@ -190,6 +191,7 @@ class App extends Component {
                 <Route path="/categoryPage" component={CategoryPage}/>
                 <Route path="/searchResult" component={SearchResult}/>
                 <Route path="/checkoutPage" component={CheckoutPage}/>
+                <Route path="/brandPage" component={BrandPage}/>
 
                 {/* <div>
                     <label>Cabang : </label> 
@@ -246,7 +248,7 @@ class App extends Component {
 
                     </tfoot>
                 </table> */}
-            {/* </div> */}
+            </div>
         </div>
         );
     }
@@ -259,4 +261,4 @@ const mapStateToProps = (state) => {
     return { auth, cart, categoryList };
 }
 
-export default connect(mapStateToProps, { onLogout, keepLogin, cookieChecked, getCategories})(App);
+export default withRouter(connect(mapStateToProps, { onLogout, keepLogin, cookieChecked, getCategories})(App));

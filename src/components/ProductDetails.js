@@ -15,7 +15,7 @@ const cookies = new Cookies();
 // Check for bugs pls
 
 class ProductDetails extends Component {
-    state = {product: null, amount: 1, show: false, cart: ''}
+    state = {product: null, amount: 1, show: false, error:'', cart: ''}
 
     componentWillMount(){
         this.getSelectedProduct()
@@ -61,7 +61,10 @@ class ProductDetails extends Component {
             username: this.props.auth.username
         }).then(ok=>{
             console.log(ok.data)
-            this.setState({cart: ok.data})
+            if(typeof(ok.data) == typeof('a')){
+                this.setState({error:ok.data})
+            }
+            else this.setState({cart: ok.data})
         }).catch(err=>{
             console.log(err)
         })
@@ -110,9 +113,9 @@ class ProductDetails extends Component {
             return(
                 <tr>
                     <th>{cart.ProductName}</th>
-                    <th>{cart.ProductPrice}</th>
-                    <th>{cart.amount}</th>
-                    <th>{cart.ProductPrice * cart.amount}</th>
+                    <th>Rp. {parseInt(cart.ProductPrice).toLocaleString('id')}</th>
+                    <th>{cart.amount} Unit(s)</th>
+                    <th>Rp. {parseInt(cart.ProductPrice * cart.amount).toLocaleString('id')}</th>
                     <th><button onClick={()=>{this.deleteItem(cart.idcart)}} >Delete</button></th>
                 </tr>
             )
@@ -146,6 +149,9 @@ class ProductDetails extends Component {
 
     cartPopUp = () => {
         console.log(this.props.auth)
+        if(this.state.error !== ''){
+            return  <h4>Stok Tidak Cukup</h4>
+        }
         if (this.props.auth === undefined) {
             return(
                 <div>
@@ -161,7 +167,7 @@ class ProductDetails extends Component {
                         <Modal.Title>You are not Logged In</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        Please Log in <a href="/login">here</a>
+                        Please Log in <Link to="/login">here</Link>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleClose}>Close</Button>
@@ -192,12 +198,14 @@ class ProductDetails extends Component {
                             <th>GrandTotal</th>
                             <th></th>
                             <th></th>
-                            <th>{this.renderGrandTotal()}</th>
+                            <th>Rp. {parseInt(this.renderGrandTotal()).toLocaleString('id')}</th>
                         </tfoot>
                     </table>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button href='/checkoutPage'>Checkout</Button>
+                    <Button >
+                        <Link to='/checkoutPage'>Checkout</Link>
+                    </Button>
                     <Button onClick={this.handleClose}>Continue Shopping</Button>
                 </Modal.Footer>
             </div>
@@ -239,14 +247,14 @@ class ProductDetails extends Component {
                     Available Stock : {this.state.product[0].Stock}
                 </div>
                 <div>
-                    Rp. {this.state.product[0].ProductPrice} x {' '}
+                    Rp. {parseInt(this.state.product[0].ProductPrice).toLocaleString('id')} x {' '}
                     <select onChange={this.changeAmount} ref='amount'>
                         {this.renderStock()}
                     </select>     
                 </div>
                  
                  <div>
-                     Total Price : Rp. {this.renderTotal()}
+                     Total Price : Rp. {parseInt(this.renderTotal()).toLocaleString('id')}
                  </div>
 
                 <Button onClick={ this.onBuyBtnClick } bsStyle="primary">Add to Cart</Button>

@@ -14,17 +14,17 @@ class SearchResult extends Component {
     state={listKaryawan:[], listCabang:[], editedItemID:0};
 
     componentWillMount(){
-        Axios.get('http://localhost:1002/products')
-        .then((res)=>{
-            // console.log(res.data);
-            this.setState({listProducts:res.data})
-        })
+        // Axios.get('http://localhost:1002/products')
+        // .then((res)=>{
+        //     // console.log(res.data);
+        //     this.setState({listProducts:res.data})
+        // })
     }
     
-    onSearchBtnClick=()=>{
-        this.props.productSearch(this.refs.search.value)
-        console.log(this.props.searchResult.searchResult)
-    }
+    // onSearchBtnClick=()=>{
+    //     this.props.productSearch(this.refs.search.value)
+    //     console.log(this.props.searchResult.searchResult)
+    // }
     
     selectedProduct(id){
         cookies.set('SelectedProduct', id, { path: '/' });
@@ -39,9 +39,11 @@ class SearchResult extends Component {
                         <Thumbnail src={MiNotebookAir13} alt="Picture Not Found">
                             <h3>{data.ProductName} </h3>
                             <p>{data.description}</p><br/>
-                            <p>{data.ProductPrice}</p>
+                            <p>{data.ProductPrice.toLocaleString('id')}</p>
                             <p>
-                                <Button href="/productDetails" onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">Details</Button>
+                                <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
+                                    <Link to="/productDetails">Details</Link>
+                                </Button>
                                 &nbsp;
                                 {/* <Button bsStyle="default">Buy</Button> */}
                             </p>
@@ -68,8 +70,8 @@ class SearchResult extends Component {
                 <br/>
                 <h1> SEARCH  PAGE</h1>
                 <span>
-                    <input type='text' ref='search' placeholder='Search Product'/>
-                    <input type='button' value='Search' onClick={this.onSearchBtnClick}/>
+                    {/* <input type='text' ref='search' placeholder='Search Product'/> */}
+                    {/* <input type='button' value='Search' onClick={this.onSearchBtnClick}/> */}
                 </span>
                 <br/>
                 <br/>
@@ -80,10 +82,11 @@ class SearchResult extends Component {
         );
     };
 }
+
 const mapStateToProps = (state) => {
     const searchResult = state.searchResult;
     const admin = state.admin
     return {admin, searchResult};
 }
 
-export default connect(mapStateToProps, {productSearch})(SearchResult);
+export default withRouter(connect(mapStateToProps, {productSearch})(SearchResult));

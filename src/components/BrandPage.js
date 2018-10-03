@@ -9,18 +9,21 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-class homepageItemList extends Component {
-    state = { products : [], edit : 0 }
+class BrandPage extends Component {
+    state = { products : []}
 
     componentWillMount(){
         this.getProductList();
     }
     
     getProductList(){
-         Axios.get("http://localhost:1002/products")
+        var selectedProduct = cookies.get('SelectedCategory')
+        console.log(selectedProduct)
+        Axios.get("http://localhost:1002/categories/" + selectedProduct)
         .then(ok=>{
-            this.setState({products:ok.data, edit : 0})
-            console.log(this.state.products)
+            // console.log(ok)
+            this.setState({products:ok.data})
+            // console.log(this.state.products)
         })
     }
 
@@ -30,12 +33,13 @@ class homepageItemList extends Component {
 
     renderItemList(){
         return this.state.products.map(data=>{
+            // console.log(data);
             return(
                 <Col xs={6} md={4}>
                     <Thumbnail src={MiNotebookAir13} alt="Picture Not Found">
                         <h3>{data.ProductName} </h3>
                         <p>{data.description}</p><br/>
-                        <p>Rp. {parseInt(data.ProductPrice).toLocaleString('id')}</p>
+                        <p>{data.ProductPrice.toLocaleString('id')}</p>
                         <p>
                             <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
                                 <Link to="/productDetails">Details</Link>
@@ -48,13 +52,40 @@ class homepageItemList extends Component {
             )
         })
     }
+
+    renderCategoryName(){
+        if(cookies.get('SelectedCategory')==1){
+            // console.log('cat 1')
+            return(
+                "Budget Laptops"
+            )
+        }else if(cookies.get('SelectedCategory')==2){
+            // console.log('cat 1')
+            return(
+                "Mid-End Laptops"
+            )
+        }else if(cookies.get('SelectedCategory')==3){
+            // console.log('cat 1')
+            return(
+                "Premium Laptops"
+            )
+        }else {
+            console.log(cookies.get('SelectedCategory'))
+            // console.log('gagal')
+        }
+    }
     render() {
+        // console.log(this.state.products[0])
         return(
             <div>
+                <br/>
+                <br/>
+                <br/>
+                <h3>{this.renderCategoryName()}</h3>
                 {this.renderItemList()}
             </div>
         );
     };
 }
 
-export default homepageItemList;
+export default BrandPage;

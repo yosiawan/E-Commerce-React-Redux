@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import {Modal, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 const cookies = new Cookies();
 
@@ -123,7 +124,9 @@ class CheckoutPage extends Component {
                 <Modal show={this.state.show} onHide={this.handleClose}>
                     <h3>Terimakasih Telah Berbelanja di Xiao Mai</h3>
                     <Modal.Footer>
-                        <Button href='/'>Kembali ke Halaman Utama</Button>
+                        <Button >
+                            <Link to='/'>Kembali ke Halaman Utama</Link>
+                        </Button>
                     </Modal.Footer>
                 </Modal>
 
