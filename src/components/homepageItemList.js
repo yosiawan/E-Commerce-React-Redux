@@ -28,7 +28,7 @@ class homepageItemList extends Component {
         console.log(this.props.Product)
         return this.props.Product.productList.map(data=>{
             return(
-                <Col xs={6} md={4}>
+                <Col xs={6} lg={4}>
                     <Thumbnail src={MiNotebookAir13} alt="Picture Not Found">
                         <h3>{data.ProductName} </h3>
                         <p>{data.description}</p><br/>
