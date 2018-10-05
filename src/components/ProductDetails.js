@@ -5,7 +5,6 @@ import XPS15 from '../supports/img/XPS 15 - 1.jpg';
 import Cookies from 'universal-cookie';
 import {Image, Col, Button, Modal} from 'react-bootstrap';
 import Axios from 'axios';
-import { API_URL_1 } from '../supports/api-url/apiurl';
 import { addToCart } from '../actions';
 
 const cookies = new Cookies();

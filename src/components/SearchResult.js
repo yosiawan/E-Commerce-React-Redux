@@ -11,6 +11,7 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 class SearchResult extends Component {
+    
     state={listKaryawan:[], listCabang:[], editedItemID:0};
 
     componentWillMount(){
@@ -66,6 +67,9 @@ class SearchResult extends Component {
         console.log(this.props.admin)
         return(
             <div>
+                <br/>
+                <br/>
+                <br/>
                 <br/>
                 <br/>
                 <h1> SEARCH  PAGE</h1>

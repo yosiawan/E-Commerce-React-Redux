@@ -16,9 +16,10 @@ import WebFont from 'webfontloader';
 
 WebFont.load({
   google: {
-    families: ['Titillium Web:300,400,700', 'sans-serif']
+    families: ['Exo 2', 'sans-serif']
   }
 });
+
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
 ReactDOM.render(

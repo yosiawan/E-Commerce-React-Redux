@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Axios from 'axios';
-import { API_URL_1 } from '../supports/api-url/apiurl';
 import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../supports/css/bootstrap.css'

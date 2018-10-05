@@ -8,7 +8,8 @@ import RegisterPage from './components/RegisterPage';
 import Dashboard from './components/Dashboard';
 import ProductDetails from './components/ProductDetails';
 import Axios from 'axios';
-import { onLogout, keepLogin, cookieChecked, getCategories } from './actions';
+import { onLogout, keepLogin, cookieChecked, getCategories, getBrands } from './actions';
+import {getAllProduct} from './actions/Product'
 import { connect } from 'react-redux';
 import CategoryPage from './components/CategoryPage';
 import SearchResult from './components/SearchResult';
@@ -16,12 +17,16 @@ import AdminLoginPage from './components/AdminLoginPage';
 import AdminRegisterPage from './components/AdminRegisterPage';
 import CheckoutPage from './components/CheckoutPage';
 import BrandPage from './components/BrandPage';
+import UserTransactionHistory from './components/UserTransactionHistory';
 
 
 class App extends Component {
     state={listKaryawan:[], listCabang:[], editedItemID:0, test:true};
 
     componentWillMount(){
+        this.props.getAllProduct()
+        this.props.getCategories()
+        this.props.getBrands()
         // this.props.getCategories()
         // Axios.get('http://localhost:1001/Karyawan')
         // .then((res)=>{
@@ -192,6 +197,7 @@ class App extends Component {
                 <Route path="/searchResult" component={SearchResult}/>
                 <Route path="/checkoutPage" component={CheckoutPage}/>
                 <Route path="/brandPage" component={BrandPage}/>
+                <Route path="/userTransactionHistory" component={UserTransactionHistory}/>
 
                 {/* <div>
                     <label>Cabang : </label> 
@@ -261,4 +267,4 @@ const mapStateToProps = (state) => {
     return { auth, cart, categoryList };
 }
 
-export default withRouter(connect(mapStateToProps, { onLogout, keepLogin, cookieChecked, getCategories})(App));
+export default withRouter(connect(mapStateToProps, { onLogout, keepLogin, cookieChecked, getBrands, getCategories, getAllProduct})(App));

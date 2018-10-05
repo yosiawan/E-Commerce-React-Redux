@@ -3,33 +3,30 @@ import {Grid, Row, Col, Thumbnail, Button} from 'react-bootstrap';
 import XPS15 from '../supports/img/XPS 15.jpg';
 import MiNotebookAir13 from '../supports/img/Mi Notebook Air 13.jpg';
 import {Link} from 'react-router-dom';
-import Axios from 'axios';
-import { API_URL_1 } from '../supports/api-url/apiurl';
 import Cookies from 'universal-cookie';
+import { connect } from 'react-redux';
+// import { selectProduct} from '../actions';
 
 const cookies = new Cookies();
 
 class homepageItemList extends Component {
-    state = { products : [], edit : 0 }
-
-    componentWillMount(){
-        this.getProductList();
-    }
-    
-    getProductList(){
-         Axios.get("http://localhost:1002/products")
-        .then(ok=>{
-            this.setState({products:ok.data, edit : 0})
-            console.log(this.state.products)
-        })
-    }
 
     selectedProduct(id){
         cookies.set('SelectedProduct', id, { path: '/' });
     }
 
     renderItemList(){
-        return this.state.products.map(data=>{
+        if(this.props.Product.productList == ""){
+            return(
+                <div>
+                    <h1>
+                        Please wait . . .
+                    </h1>
+                </div>
+            )
+        }
+        console.log(this.props.Product)
+        return this.props.Product.productList.map(data=>{
             return(
                 <Col xs={6} md={4}>
                     <Thumbnail src={MiNotebookAir13} alt="Picture Not Found">
@@ -37,11 +34,12 @@ class homepageItemList extends Component {
                         <p>{data.description}</p><br/>
                         <p>Rp. {parseInt(data.ProductPrice).toLocaleString('id')}</p>
                         <p>
-                            <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
-                                <Link to="/productDetails">Details</Link>
-                            </Button>
+                            <Link to="/productDetails">
+                                <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
+                                    Details
+                                </Button>
+                            </Link>
                             &nbsp;
-                            {/* <Button bsStyle="default">Buy</Button> */}
                         </p>
                     </Thumbnail>
                 </Col>
@@ -51,10 +49,18 @@ class homepageItemList extends Component {
     render() {
         return(
             <div>
+                <br/>
+                <br/>
+                <br/>
                 {this.renderItemList()}
             </div>
         );
     };
 }
 
-export default homepageItemList;
+const mapStateToProps = (state) => {
+    const Product = state.Product
+    return {Product};
+}
+
+export default connect(mapStateToProps)(homepageItemList);

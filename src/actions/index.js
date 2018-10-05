@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { API_URL_1 } from '../supports/api-url/apiurl';
 
 export const onLogin = (user) => {
     return(dispatch) => {
@@ -96,6 +95,27 @@ export const getCategories = () => {
                 payload: {categoryList: ok.data}
             })
         }).catch(err=>{
+            console.log('get kategori gagal')
+            console.log(err)
+        })
+    }
+};
+
+export const getBrands = () => {
+    console.log('Brands di get')
+    return(dispatch) => {
+        axios.get('http://localhost:1002/brands')
+        .then(ok=>{
+            // console.log(ok.data)
+            dispatch({
+                type: "Get Brand Success",
+                payload: {brandList: ok.data}
+            })
+        }).catch(err=>{
+            dispatch({
+                type: "Get Brand Failed",
+                payload: {err: 'Get Brand Failed'}
+            })
             console.log('get kategori gagal')
             console.log(err)
         })
@@ -210,3 +230,35 @@ export const onAdminRegister = (user) => {
         })
     }
 }
+
+// ================ Selection ====================
+export const selectCategory = (idCategory) => {
+    console.log(idCategory)
+    return(dispatch)=>{
+        dispatch({
+            type: "Category Selected",
+            payload: {selectedCategory: idCategory}
+        })
+    }
+}
+
+export const selectBrand = (idBrand) => {
+    console.log(idBrand)
+    return(dispatch)=>{
+        dispatch({
+            type: "Brand Selected",
+            payload: {selectedBrand: idBrand}
+        })
+    }
+}
+
+export const selectProduct = (idProduct) => {
+    console.log(idProduct)
+    return(dispatch)=>{
+        dispatch({
+            type: "Product Selected",
+            payload: {selectedProduct: idProduct}
+        })
+    }
+}
+// ===============================================

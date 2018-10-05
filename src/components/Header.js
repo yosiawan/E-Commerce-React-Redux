@@ -3,7 +3,7 @@ import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
-import { onLogout, keepLogin, cookieChecked, onAdminLogout, keepAdminLogin, cookieAdminChecked, productSearch } from '../actions';
+import { selectBrand, selectCategory, onLogout, keepLogin, cookieChecked, onAdminLogout, keepAdminLogin, cookieAdminChecked, productSearch } from '../actions';
 import Axios from 'axios';
 
 const cookies = new Cookies();
@@ -13,8 +13,8 @@ class Header extends Component {
     state={ categoryList:[], brandList:[] }
     
     componentWillMount() {
-        this.getRenderCategory()
-        this.getBrands()
+        // this.getRenderCategory()
+        // this.getBrands()
 
         const cookieNya = cookies.get('LoggedInUser');
         if(cookieNya !== undefined) {
@@ -61,36 +61,17 @@ class Header extends Component {
         this.props.onAdminLogout();
         cookies.remove('LoggedInAdmin');
     }
-        
-    selectedCategory(id){
-        cookies.set('SelectedCategory', id, { path: '/' });
-    }
-
-    selectedBrand(id){
-        cookies.set('SelectedBrand', id, { path: '/' });
-    }
-
-    getRenderCategory(){
-        Axios.get('http://localhost:1002/categories')
-        .then(ok=>{
-            // console.log(ok.data)
-            this.setState({categoryList : ok.data})
-            // console.log(this.state.categoryList)
-        }).catch(err=>{
-            console.log('render kategori gagal')
-            // console.log(err)
-        })
-    }
 
     renderCategory(){
+        // console.log(this.props.Category.categoryList)
+        if (this.props.Category.categoryList == ""){
+            return <h4>Please Wait . . .</h4>
+        }
         return(
-            this.state.categoryList.map(data=>{
-                console.log(data.Category)
-                console.log(data.idCategory)
-
-                // console.log('mapping render berjalan')
+            this.props.Category.categoryList.map(data=>{
+                // console.log(data)
                 return(
-                    <MenuItem onClick={()=>this.selectedCategory(data.idCategory)}>
+                    <MenuItem onClick={()=>this.props.selectCategory(data.idCategory)}>
                         <Link to='/categoryPage'>
                             {data.Category}
                         </Link>
@@ -100,22 +81,15 @@ class Header extends Component {
         )
     }
 
-    getBrands(){
-        Axios.get('http://localhost:1002/brands')
-        .then(ok=>{
-            // console.log(ok.data)
-            this.setState({brandList : ok.data})
-            // console.log(this.state.categoryList)
-        }).catch(err=>{
-            console.log('render brands gagal')
-            // console.log(err)
-        })
-    }
-
     renderBrands(){
-        return this.state.brandList.map(data=>{
+        // console.log(this.props.Brand.brandList)
+        if(this.props.Brand.brandList == ""){
+            return <h4>Please Wait . . .</h4>
+        }
+        return this.props.Brand.brandList.map(data=>{
+            // console.log(data)
             return(
-                <MenuItem onClick={()=>this.selectedBrand(data.idBrand)}>
+                <MenuItem onClick={()=>this.props.selectBrand(data.idbrand)}>
                     <Link to='/brandPage'>
                         {data.Brand}
                     </Link>
@@ -161,6 +135,11 @@ class Header extends Component {
                             <NavItem >
                                 <Link to="/checkoutPage" >
                                     Cart
+                                </Link>
+                            </NavItem>
+                            <NavItem >
+                                <Link to="/userTransactionHistory" >
+                                    Transaction History
                                 </Link>
                             </NavItem>
                             <MenuItem divider />
@@ -287,7 +266,10 @@ const mapStateToProps = (state) => {
     const auth = state.auth;
     const admin = state.admin
     const searchResult = state.searchResult
-    return { auth, admin, searchResult};
+    const Brand = state.Brand
+    const Category = state.Category
+    const Select = state.Select
+    return { auth, admin, searchResult, Brand, Category, Select};
 }
 
-export default connect(mapStateToProps, { onLogout, keepLogin, cookieChecked,onAdminLogout, keepAdminLogin, cookieAdminChecked, productSearch})(Header);
+export default connect(mapStateToProps, { onLogout, keepLogin, cookieChecked,onAdminLogout, keepAdminLogin, cookieAdminChecked, productSearch, selectCategory, selectBrand})(Header);
