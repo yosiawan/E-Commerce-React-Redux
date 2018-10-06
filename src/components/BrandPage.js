@@ -69,7 +69,7 @@ class CategoryPage extends Component {
                             <p>{data.ProductPrice}</p>
                             <p>
                                 <Link to="/productDetails">
-                                    <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
+                                    <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="Success">
                                         Details
                                     </Button>
                                 </Link>

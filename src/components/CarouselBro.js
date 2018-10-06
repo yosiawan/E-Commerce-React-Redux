@@ -55,7 +55,7 @@ class CarouselBro extends Component {
                 <div class="header">
                     <div class="info">
                         <h1>
-                            Welcome to Xiao Mai
+                            Welcome to XMX
                         </h1>
                         <div class="meta">
                             <br/>

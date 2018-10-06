@@ -6,7 +6,7 @@ class Footer extends Component {
     render(){
         return(
             <div class="footer">
-                <div style={{background:'#337ab7'}} id="button">
+                <div style={{background:'#449d44'}} id="button">
                 
                 </div>
                 <div id="container">
@@ -14,7 +14,10 @@ class Footer extends Component {
                     <br/>
                     <br/>
                     <div class="footer_center">
-                        <h3> Footer </h3>
+                        <h3 style={{color: '#449d44'}}>Footer</h3>
+                    </div>
+                    <div>
+                        Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit.
                     </div>
                 </div>
                 </div>

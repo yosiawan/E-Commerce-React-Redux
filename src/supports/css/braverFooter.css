@@ -1,11 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400);
 
-body{
+/* body{
   font-family: 'Source Sans Pro', sans-serif;
   font-weight:300;
   background-color:lightblue;
   color:#FFF;
-}
+} */
 section{
   text-align:center;
 }
@@ -64,7 +64,7 @@ section{
   position:relative;
   top:0;
   left:0;
-  background: rgb(238, 238, 238);
+  background: white;
   
 }
 .footer #cont{

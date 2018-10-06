@@ -256,8 +256,7 @@ class ProductDetails extends Component {
                      Total Price : Rp. {parseInt(this.renderTotal()).toLocaleString('id')}
                  </div>
 
-                <Button onClick={ this.onBuyBtnClick } bsStyle="primary">Add to Cart</Button>
-                {/* <Button onClick={ () => console.log(this.state.amount)} bsStyle="primary"> Check</Button> */}
+                <Button onClick={ this.onBuyBtnClick } bsStyle="success">Add to Cart</Button>
 
                 <br/>
                 <br/>

@@ -108,7 +108,7 @@ class Header extends Component {
                 <Navbar.Header>
                     <Navbar.Brand >
                         <Link style={{color:'#449d44'}} to='/'>
-                            Xiao mai
+                            XMX
                         </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle />
@@ -153,7 +153,7 @@ class Header extends Component {
                 <Navbar.Header>
                     <Navbar.Brand >
                         <Link style={{color:'#449d44'}} to='/'>
-                            Xiao mai
+                            XMX
                         </Link>
                     </Navbar.Brand>
                     <Navbar.Toggle />
@@ -197,7 +197,7 @@ class Header extends Component {
             <Navbar.Header >
                 <Navbar.Brand >
                     <Link style={{color:'#449d44'}} to='/'>
-                        <Image src='https://i.pinimg.com/236x/53/10/e2/5310e25a8b0ae1c128d718ff8d63e55f.jpg' responsive/>
+                        XMX
                     </Link>
                 </Navbar.Brand>
                 <Navbar.Toggle />
