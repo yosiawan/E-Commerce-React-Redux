@@ -46,7 +46,6 @@ class AdminRegisterPage extends Component {
     
                                 </form>
                             </div>
-                            <p className="botto-text"> Designed by Sunil Rajput</p>
                         </div>
                     </div>
                 </div>

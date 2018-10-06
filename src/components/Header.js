@@ -220,29 +220,16 @@ class Header extends Component {
                     </NavItem>
                 </Nav>
                 <Nav pullRight>
-                    <NavDropdown title="Login" id="basic-nav-dropdown">
+                    <NavDropdown title="Login or Register" id="basic-nav-dropdown">
                         <MenuItem >
                             <Link to="/login" >
-                                Login as User
+                                Login
                             </Link>
                         </MenuItem>
                         <MenuItem divider />
-                        <MenuItem >
-                            <Link  to="/adminlogin" >
-                                Login as Admin
-                            </Link>
-                        </MenuItem>
-                    </NavDropdown>
-                    <NavDropdown title="Register" id="basic-nav-dropdown">
                         <MenuItem >
                             <Link to="/register" >
-                                Register as User
-                            </Link>
-                        </MenuItem>
-                        <MenuItem divider />
-                        <MenuItem >
-                            <Link to="/adminregister" >
-                                Register as Admin
+                                Register
                             </Link>
                         </MenuItem>
                     </NavDropdown>
