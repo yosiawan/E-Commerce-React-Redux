@@ -35,7 +35,7 @@ class homepageItemList extends Component {
                         <p>Rp. {parseInt(data.ProductPrice).toLocaleString('id')}</p>
                         <p>
                             <Link to="/productDetails">
-                                <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
+                                <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="success">
                                     Details
                                 </Button>
                             </Link>
@@ -48,7 +48,7 @@ class homepageItemList extends Component {
     }
     render() {
         return(
-            <div>
+            <div style={{backgroundColor:'white'}}>
                 <br/>
                 <br/>
                 <br/>

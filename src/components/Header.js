@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { Image, Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
@@ -107,7 +107,7 @@ class Header extends Component {
             return (<Navbar fixedTop={true} collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand >
-                        <Link style={{color:'#337ab7'}} to='/'>
+                        <Link style={{color:'#449d44'}} to='/'>
                             Xiao mai
                         </Link>
                     </Navbar.Brand>
@@ -152,7 +152,7 @@ class Header extends Component {
             return (<Navbar fixedTop={true} collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand >
-                        <Link style={{color:'#337ab7'}} to='/'>
+                        <Link style={{color:'#449d44'}} to='/'>
                             Xiao mai
                         </Link>
                     </Navbar.Brand>
@@ -196,8 +196,8 @@ class Header extends Component {
         <Navbar fixedTop={true} collapseOnSelect>
             <Navbar.Header >
                 <Navbar.Brand >
-                    <Link style={{color:'#337ab7'}} to='/'>
-                        Xiao mai
+                    <Link style={{color:'#449d44'}} to='/'>
+                        <Image src='https://i.pinimg.com/236x/53/10/e2/5310e25a8b0ae1c128d718ff8d63e55f.jpg' responsive/>
                     </Link>
                 </Navbar.Brand>
                 <Navbar.Toggle />

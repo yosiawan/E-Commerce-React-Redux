@@ -11,14 +11,14 @@ import registerServiceWorker from './registerServiceWorker';
 import './supports/css/bootstrap.css';
 // import './supports/css/agency.min.css';
 // import './supports/font-awesome/css/font-awesome.min.css';
-import 'react-responsive-carousel/lib/styles/carousel.css';
+// import 'react-responsive-carousel/lib/styles/carousel.css';
 import WebFont from 'webfontloader';
 
-WebFont.load({
-  google: {
-    families: ['Roboto', 'sans-serif']
-  }
-});
+// WebFont.load({
+//   google: {
+//     families: ['Roboto', 'sans-serif']
+//   }
+// });
 
 const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 
