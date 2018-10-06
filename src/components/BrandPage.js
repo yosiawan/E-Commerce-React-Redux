@@ -63,7 +63,7 @@ class CategoryPage extends Component {
                 console.log(data);
                 return(
                     <Col xs={6} md={4}>
-                        <Thumbnail src={MiNotebookAir13} alt="Picture Not Found">
+                        <Thumbnail src={data.Img} alt="Picture Not Found">
                             <h3>{data.ProductName} </h3>
                             <p>{data.description}</p><br/>
                             <p>{data.ProductPrice}</p>

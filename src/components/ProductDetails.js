@@ -222,7 +222,7 @@ class ProductDetails extends Component {
                 
             )
         }
-        
+        console.log(this.state.product[0])
         return(
             <div >
                 <h3>
@@ -232,7 +232,7 @@ class ProductDetails extends Component {
                     {this.state.product[0].ProductName}
                 </h3>
                 <Col className="container container-fluid" xs={12} >
-                     <Image src={XPS15} responsive />
+                     <Image src={this.state.product[0].Img} responsive />
                 </Col>
 
                 <div>
