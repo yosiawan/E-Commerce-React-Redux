@@ -36,7 +36,7 @@ html,body{
   position:absolute;
   top:0;
   left:0;
-    -webkit-backface-visibility: hidden;
+    /* -webkit-backface-visibility: hidden; */
     -webkit-transform: translateZ(0) scale(1.0, 1.0);
     transform: translateZ(0);
   background:#1B2030 url(https://i.pinimg.com/originals/37/c9/0c/37c90c9b7e57869a73196b689b20f056.gif) top center no-repeat;
