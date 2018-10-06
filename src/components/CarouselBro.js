@@ -9,21 +9,27 @@ const cookies = new Cookies();
 
 class CarouselBro extends Component {
 
-    state = { products: [] }
+    state = { products: [], carousel:'' }
 
     selectedProduct(id){
         cookies.set('SelectedProduct', id, { path: '/' });
     }
     
-    renderCaroussel=()=>{
-        var caroussel = []
+    componentWillMount(){
+        this.getCaroussel();
+    }
+    getCaroussel=()=>{
         Axios.get("http://localhost:1002/carousselProducts")
         .then(ok=>{
             console.log(ok.data)
-            caroussel.push(ok.data);
+            this.setState({carousel: ok.data})
         })    
-        console.log(caroussel)
-        return caroussel.map(data=>{
+    }
+    renderCaroussel=()=>{
+        if(this.state.carousel == ''){
+            return <div>Please Wait . . .</div>
+        }
+        return this.state.carousel.map(data=>{
             console.log(data.Img)
             return(
                 <div className='geser'>
@@ -36,12 +42,14 @@ class CarouselBro extends Component {
             )
         })
     }
+    
+        
 
     render() {
         return(
             <div className='perlebar '>
                 <Carousel className=' carousselAdjuster timpaCSScaroussel'  showThumbs={false} autoPlay={true}>
-                    {/* {this.renderCaroussel()} */}
+                    {this.renderCaroussel()}
                 </Carousel>
                 <br/>
             </div>

@@ -67,14 +67,14 @@ class UserTransactionHistory extends Component{
                 <br/>
                 <br/>
                 Your Transaction History
-                <table  responsive>
+                <table className='container' responsive>
                     <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>ProductName</th>
-                            <th>ProductPrice</th>
-                            <th>Amount</th>
-                            <th>Total</th>
+                        <tr >
+                            <th style={{textAlign:"center"}}>ID</th>
+                            <th style={{textAlign:"center"}}>ProductName</th>
+                            <th style={{textAlign:"center"}}>ProductPrice</th>
+                            <th style={{textAlign:"center"}}>Amount</th>
+                            <th style={{textAlign:"center"}}>Total</th>
                             
                         </tr>
                     </thead>
@@ -85,11 +85,11 @@ class UserTransactionHistory extends Component{
 
                     <tfoot>
                         <tr>
-                            <th>Grand Total</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>Rp. {parseInt(this.renderGrandTotal()).toLocaleString('id')}</th>
+                            <th style={{textAlign:"center"}}>Grand Total</th>
+                            <th style={{textAlign:"center"}}></th>
+                            <th style={{textAlign:"center"}}></th>
+                            <th style={{textAlign:"center"}}></th>
+                            <th style={{textAlign:"center"}}>Rp. {parseInt(this.renderGrandTotal()).toLocaleString('id')}</th>
                             
                         </tr>
                     </tfoot>

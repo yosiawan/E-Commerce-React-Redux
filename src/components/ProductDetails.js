@@ -111,11 +111,11 @@ class ProductDetails extends Component {
         return this.state.cart.map(cart=>{
             return(
                 <tr>
-                    <th>{cart.ProductName}</th>
-                    <th>Rp. {parseInt(cart.ProductPrice).toLocaleString('id')}</th>
-                    <th>{cart.amount} Unit(s)</th>
-                    <th>Rp. {parseInt(cart.ProductPrice * cart.amount).toLocaleString('id')}</th>
-                    <th><button onClick={()=>{this.deleteItem(cart.idcart)}} >Delete</button></th>
+                    <td style={{textAlign:"center"}}>{cart.ProductName}</td>
+                    <td style={{textAlign:"center"}}>Rp. {parseInt(cart.ProductPrice).toLocaleString('id')}</td>
+                    <td style={{textAlign:"center"}}>{cart.amount} Unit(s)</td>
+                    <td style={{textAlign:"center"}}>Rp. {parseInt(cart.ProductPrice * cart.amount).toLocaleString('id')}</td>
+                    <td style={{textAlign:"center"}}><button onClick={()=>{this.deleteItem(cart.idcart)}} >Delete</button></td>
                 </tr>
             )
         })
@@ -180,13 +180,13 @@ class ProductDetails extends Component {
                     <Modal.Title>Your Cart</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <table>
+                    <table className='container'>
                         <thead>
                             <tr>
-                                <th>ProductName</th>
-                                <th>Price</th>
-                                <th>Amount</th>
-                                <th>Total Price</th>
+                                <th style={{textAlign:"center"}}>ProductName</th>
+                                <th style={{textAlign:"center"}}>Price</th>
+                                <th style={{textAlign:"center"}}>Amount</th>
+                                <th style={{textAlign:"center"}}>Total Price</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -194,10 +194,10 @@ class ProductDetails extends Component {
                             {this.renderCart()}
                         </tbody>
                         <tfoot>
-                            <th>GrandTotal</th>
-                            <th></th>
-                            <th></th>
-                            <th>Rp. {parseInt(this.renderGrandTotal()).toLocaleString('id')}</th>
+                            <th style={{textAlign:"center"}}>GrandTotal</th>
+                            <th style={{textAlign:"center"}}></th>
+                            <th style={{textAlign:"center"}}></th>
+                            <th style={{textAlign:"center"}}>Rp. {parseInt(this.renderGrandTotal()).toLocaleString('id')}</th>
                         </tfoot>
                     </table>
                 </Modal.Body>

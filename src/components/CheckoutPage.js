@@ -33,11 +33,11 @@ class CheckoutPage extends Component {
         return this.state.cart.map(cart=>{
             return(
                 <tr>
-                    <th>{cart.ProductName}</th>
-                    <th>{cart.ProductPrice}</th>
-                    <th>{cart.amount}</th>
-                    <th>{cart.ProductPrice * cart.amount}</th>
-                    <th><button onClick={()=>{this.deleteItem(cart.idcart)}} >Delete</button></th>
+                    <td style={{textAlign:"center"}}>{cart.ProductName}</td>
+                    <td style={{textAlign:"center"}}>{cart.ProductPrice}</td>
+                    <td style={{textAlign:"center"}}>{cart.amount}</td>
+                    <td style={{textAlign:"center"}}>{cart.ProductPrice * cart.amount}</td>
+                    <td><button onClick={()=>{this.deleteItem(cart.idcart)}} >Delete</button></td>
                 </tr>
             )
         })
@@ -99,24 +99,24 @@ class CheckoutPage extends Component {
                  <br/>
                  <br/>
                  <br/>
-                 <table>
+                 <table className='container'>
                     <thead>
                         <tr>
-                            <th>ProductName</th>
-                            <th>Price</th>
-                            <th>Amount</th>
-                            <th>Total Price</th>
-                            <th></th>
+                            <th style={{textAlign:"center"}}>ProductName</th>
+                            <th style={{textAlign:"center"}}>Price</th>
+                            <th style={{textAlign:"center"}}>Amount</th>
+                            <th style={{textAlign:"center"}}>Total Price</th>
+                            <th style={{textAlign:"center"}}></th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.renderCart()}
                     </tbody>
                     <tfoot>
-                        <th>GrandTotal</th>
-                        <th></th>
-                        <th></th>
-                        <th>{this.renderGrandTotal()}</th>
+                        <th style={{textAlign:"center"}}>GrandTotal</th>
+                        <th style={{textAlign:"center"}}></th>
+                        <th style={{textAlign:"center"}}></th>
+                        <th style={{textAlign:"center"}}>{this.renderGrandTotal()}</th>
                     </tfoot>
                 </table>
                 <input type='button' onClick={this.checkoutBtn} value='Checkout'/>

@@ -18,6 +18,7 @@ import AdminRegisterPage from './components/AdminRegisterPage';
 import CheckoutPage from './components/CheckoutPage';
 import BrandPage from './components/BrandPage';
 import UserTransactionHistory from './components/UserTransactionHistory';
+import Footer from './components/Footer';
 
 
 class App extends Component {
@@ -198,7 +199,7 @@ class App extends Component {
                 <Route path="/checkoutPage" component={CheckoutPage}/>
                 <Route path="/brandPage" component={BrandPage}/>
                 <Route path="/userTransactionHistory" component={UserTransactionHistory}/>
-
+            <Footer/>
                 {/* <div>
                     <label>Cabang : </label> 
                     <select ref='cabangSearch'>
