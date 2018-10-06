@@ -29,7 +29,7 @@ class homepageItemList extends Component {
         return this.props.Product.productList.map(data=>{
             return(
                 <Col xs={6} lg={4}>
-                    <Thumbnail src={data.Img} alt="Picture Not Found">
+                    <Thumbnail src={XPS15} alt="Picture Not Found">
                         <h3>{data.ProductName} </h3>
                         <p>{data.description}</p><br/>
                         <p>Rp. {parseInt(data.ProductPrice).toLocaleString('id')}</p>
@@ -52,7 +52,10 @@ class homepageItemList extends Component {
                 <br/>
                 <br/>
                 <br/>
+                <Grid>
                 {this.renderItemList()}
+
+                </Grid>
             </div>
         );
     };

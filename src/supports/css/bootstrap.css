@@ -11,6 +11,11 @@ html {
 }
 body {
   margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: #fff;
 }
 article,
 aside,
@@ -4493,8 +4498,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #f8f8f8;
-  border-color: #e7e7e7;
+  background-color: white; /* CHANGE HERE */
+  border-color:white;
 }
 .navbar-default .navbar-brand {
   color: #777;

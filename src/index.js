@@ -8,15 +8,15 @@ import reducers from './reducers';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import './supports/css/bootstrap.min.css';
+import './supports/css/bootstrap.css';
 // import './supports/css/agency.min.css';
-import './supports/font-awesome/css/font-awesome.min.css';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+// import './supports/font-awesome/css/font-awesome.min.css';
+import 'react-responsive-carousel/lib/styles/carousel.css';
 import WebFont from 'webfontloader';
 
 WebFont.load({
   google: {
-    families: ['Exo 2', 'sans-serif']
+    families: ['Roboto', 'sans-serif']
   }
 });
 
