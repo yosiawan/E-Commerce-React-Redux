@@ -107,7 +107,7 @@ class Header extends Component {
             return (<Navbar fixedTop={true} collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand >
-                        <Link to='/'>
+                        <Link style={{color:'#337ab7'}} to='/'>
                             Xiao mai
                         </Link>
                     </Navbar.Brand>
@@ -152,7 +152,7 @@ class Header extends Component {
             return (<Navbar fixedTop={true} collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand >
-                        <Link to='/'>
+                        <Link style={{color:'#337ab7'}} to='/'>
                             Xiao mai
                         </Link>
                     </Navbar.Brand>
@@ -196,7 +196,7 @@ class Header extends Component {
         <Navbar fixedTop={true} collapseOnSelect>
             <Navbar.Header >
                 <Navbar.Brand >
-                    <Link to='/'>
+                    <Link style={{color:'#337ab7'}} to='/'>
                         Xiao mai
                     </Link>
                 </Navbar.Brand>
@@ -207,7 +207,7 @@ class Header extends Component {
                     <NavDropdown title="Categories" id="basic-nav-dropdown">
                         {this.renderCategory()}
                     </NavDropdown>
-                    <NavDropdown  title="Brands" id="basic-nav-dropdown">
+                    <NavDropdown title="Brands" id="basic-nav-dropdown">
                         {this.renderBrands()}
                     </NavDropdown>
                     <NavItem>
@@ -228,7 +228,7 @@ class Header extends Component {
                         </MenuItem>
                         <MenuItem divider />
                         <MenuItem >
-                            <Link to="/adminlogin" >
+                            <Link  to="/adminlogin" >
                                 Login as Admin
                             </Link>
                         </MenuItem>

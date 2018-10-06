@@ -21,6 +21,7 @@ section{
     -o-transition: all 1s ease;
     -ms-transition: all 1s ease;
     transition: all 1s ease;
+  background: '#337ab7';  
 }
 .footer #button:hover{
 	width:35px;

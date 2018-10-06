@@ -12,7 +12,7 @@ const cookies = new Cookies();
 
 class SearchResult extends Component {
     
-    state={listKaryawan:[], listCabang:[], editedItemID:0};
+    state={ alphSort:true, numSort:true };
 
     componentWillMount(){
         // Axios.get('http://localhost:1002/products')
@@ -31,8 +31,31 @@ class SearchResult extends Component {
         cookies.set('SelectedProduct', id, { path: '/' });
     }
 
+    sortByName=()=>{
+        if(this.state.alphSort == true){
+            this.props.searchResult.searchResult.sort((a,b)=>{return a.ProductName > b.ProductName;})
+            this.setState({alphSort:false})
+        }else {
+            this.props.searchResult.searchResult.sort((a,b)=>{return a.ProductName < b.ProductName;})
+            this.setState({alphSort:true})
+        }
+        // console.log(this.props.searchResult.searchResult)
+    }
+
+    sortByPrice =()=>{
+        if(this.state.numSort == true){
+            this.props.searchResult.searchResult.sort((a,b)=>{return a.ProductPrice - b.ProductPrice;})
+            this.setState({numSort:false})
+        }else {
+            this.props.searchResult.searchResult.sort((a,b)=>{return b.ProductPrice - a.ProductPrice;})
+            this.setState({numSort:true})
+        }
+        // console.log(this.props.searchResult.searchResult)
+    }
+
+    
     renderItemList(){
-        console.log(this.props.searchResult.searchResult)
+        // console.log(this.props.searchResult.searchResult)
         if(this.props.searchResult.searchResult !== null){
             return this.props.searchResult.searchResult.map((data, index)=>{
                 return(
@@ -40,12 +63,13 @@ class SearchResult extends Component {
                         <Thumbnail src={MiNotebookAir13} alt="Picture Not Found">
                             <h3>{data.ProductName} </h3>
                             <p>{data.description}</p><br/>
-                            <p>{data.ProductPrice.toLocaleString('id')}</p>
+                            <p>Rp. {parseInt(data.ProductPrice).toLocaleString('id')}</p>
                             <p>
-                                <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
-                                    <Link to="/productDetails">Details</Link>
-                                </Button>
-                                &nbsp;
+                                <Link to="/productDetails">
+                                    <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
+                                        Details
+                                    </Button>
+                                </Link>
                                 {/* <Button bsStyle="default">Buy</Button> */}
                             </p>
                         </Thumbnail>
@@ -74,8 +98,9 @@ class SearchResult extends Component {
                 <br/>
                 <h1> SEARCH  PAGE</h1>
                 <span>
-                    {/* <input type='text' ref='search' placeholder='Search Product'/> */}
-                    {/* <input type='button' value='Search' onClick={this.onSearchBtnClick}/> */}
+                    <input className='btn' type='button' value='Sort By Name' onClick={this.sortByName}/>
+                
+                    <input className='btn' type='button' value='Sort By Price' onClick={this.sortByPrice}/>
                 </span>
                 <br/>
                 <br/>

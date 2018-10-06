@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 const cookies = new Cookies();
 
 class CategoryPage extends Component {
-    state = { products : []}
+    state={ alphSort:true, numSort:true };
 
     // componentWillMount(){
     //     this.getProductList();
@@ -31,6 +31,28 @@ class CategoryPage extends Component {
         cookies.set('SelectedProduct', id, { path: '/' });
     }
 
+    sortByName=()=>{
+        if(this.state.alphSort == true){
+            this.props.Product.productList.sort((a,b)=>{return a.ProductName > b.ProductName;})
+            this.setState({alphSort:false})
+        }else {
+            this.props.Product.productList.sort((a,b)=>{return a.ProductName < b.ProductName;})
+            this.setState({alphSort:true})
+        }
+        // console.log(this.props.searchResult.searchResult)
+    }
+
+    sortByPrice =()=>{
+        if(this.state.numSort == true){
+            this.props.Product.productList.sort((a,b)=>{return a.ProductPrice - b.ProductPrice;})
+            this.setState({numSort:false})
+        }else {
+            this.props.Product.productList.sort((a,b)=>{return b.ProductPrice - a.ProductPrice;})
+            this.setState({numSort:true})
+        }
+        // console.log(this.props.searchResult.searchResult)
+    }
+
     renderItemList(){
         if(this.props.Product.productList == '' || this.props.Select.selectedBrand == ""){
             return <h4> Please Wait . . .</h4>
@@ -46,9 +68,11 @@ class CategoryPage extends Component {
                             <p>{data.description}</p><br/>
                             <p>{data.ProductPrice}</p>
                             <p>
-                                <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
-                                    <Link to="/productDetails">Details</Link>
-                                </Button>
+                                <Link to="/productDetails">
+                                    <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
+                                        Details
+                                    </Button>
+                                </Link>
                                 &nbsp;
                                 {/* <Button bsStyle="default">Buy</Button> */}
                             </p>
@@ -90,7 +114,16 @@ class CategoryPage extends Component {
                 <br/>
                 <br/>
                 <h3>{this.renderCategoryName(this.props.Select.selectedBrand)}</h3>
-                {this.renderItemList()}
+                <span>
+                    <input className='btn' type='button' value='Sort By Name' onClick={this.sortByName}/>
+                
+                    <input className='btn' type='button' value='Sort By Price' onClick={this.sortByPrice}/>
+                </span>
+                <br/>
+                <br/>
+                <div>
+                    {this.renderItemList()}
+                </div>
             </div>
         );
     };

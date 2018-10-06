@@ -6,7 +6,7 @@ class Footer extends Component {
     render(){
         return(
             <div class="footer">
-                <div id="button">
+                <div style={{background:'#337ab7'}} id="button">
                 
                 </div>
                 <div id="container">
