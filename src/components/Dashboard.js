@@ -21,25 +21,6 @@ class Dashboard extends Component {
         console.log(this.state.editedItemID)
     }
 
-    //Bisa langsung search di state kalau data sudah ada di state
-    // onSearchBtnClick = () => {
-    //     console.log(this.refs.cabangSearch.value)
-    //     Axios.get('http://localhost:1001/searchKaryawan', {
-    //         params:{
-    //             Nama: this.refs.NamaSearch.value,
-    //             JenisKelamin: this.refs.kelaminSearch.value,
-    //             Gaji: this.refs.gajiSearch.value,
-    //             Cabang: this.refs.cabangSearch.value,
-    //             Jabatan: this.refs.jabatanSearch.value
-    //         }
-    //     })
-    //     .then((res)=>{
-    //         this.setState({listKaryawan: res.data})
-    //     }).catch((err)=>{
-    //         console.log(err);
-    //     })
-    // }
-
     onDeleteBtnCLick(idproducts){
         console.log(idproducts)
         if(window.confirm('Are You Sure You Want To Delete This Data?')){
@@ -56,7 +37,6 @@ class Dashboard extends Component {
     
     onAddBtnClick = () => {
         Axios.post('http://localhost:1002/products', {
-            //fill with details
             ProductName: this.refs.AddProductName.value,
             ProductPrice: this.refs.AddProductPrice.value,
             // Category: this.refs.AddCategory.value,
@@ -71,10 +51,6 @@ class Dashboard extends Component {
                 console.log(this.state.products)
             })
             console.log(res.data);
-            // var id = ['1','2','3','4','5','6']
-            // id.map(data=>{
-            //     document.getElementById(data).reset();
-            // })
         }).catch((err)=>{
             alert('Error');
             console.log(err)
@@ -156,26 +132,13 @@ class Dashboard extends Component {
     }
 
     renderOptionCategory = () => {
-        // console.log('render cabang berjalan')
         const arrJSX = this.state.products.map((data, key)=>{
-            // console.log(cabang)
             return(
                 <option key={key} value={data.idCategory}>{data.Category}</option>
             )
         })
         return arrJSX;
     }
-
-    // renderOptionCabangSearch = () => {
-    //     // console.log('render cabang berjalan')
-    //     const arrJSX = this.state.listCabang.map((cabang, key)=>{
-    //         // console.log(cabang)
-    //         return(
-    //             <option key={key} value={cabang.Kota}>{cabang.Kota}</option>
-    //         )
-    //     })
-    //     return arrJSX;
-    // }
 
     render() {
         console.log(this.props.admin.username)
@@ -187,27 +150,6 @@ class Dashboard extends Component {
                     <br/>
                     <br/>
                 
-                    {/* <div>
-                    <label>Cabang : </label> 
-                    <select ref='cabangSearch'>
-                        <option value=''>Pilih Cabang</option>
-                        {this.renderOptionCabangSearch()}
-                    </select>
-
-                    <label>Nama : </label> 
-                    <input type="text" ref="NamaSearch"/>
-
-                    <label>Jenis Kelamin : </label> 
-                    <input type='text' ref='kelaminSearch' />
-
-                    <label>Jabatan : </label> 
-                    <input type='text' ref='jabatanSearch'/>
-
-                    <label>Gaji : </label> 
-                    <input type='number' ref='gajiSearch'/>
-                </div>
-                <input type='button' onClick={this.onSearchBtnClick} value='Search'/> */}
-
                 <table  responsive>
                     <thead>
                         <tr>
