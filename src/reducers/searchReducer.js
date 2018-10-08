@@ -1,4 +1,4 @@
-const INITIAL_STATE = { searchResult: null };
+const INITIAL_STATE = { searchResult: null, err: 'Search Your Desired Product'};
     
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {

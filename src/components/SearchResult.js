@@ -82,7 +82,7 @@ class SearchResult extends Component {
                     <br/>
                     <br/>
                     <br/>
-                    <h4>Search your desired product.</h4>
+                    <h4>{this.props.searchResult.err}.</h4>
                 </div>
             )
         }

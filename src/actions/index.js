@@ -132,7 +132,7 @@ export const productSearch = (search) => {
                 console.log("Product Not Found")
                 dispatch({
                     type: "Product Not Found",
-                    payload: {searchResult: "Product Not Found"}
+                    payload: {searchResult:null, err:"Product Not Found"}
                 })
             }else if(ok.data.length > 0){
                 console.log(ok.data)
