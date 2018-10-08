@@ -53,8 +53,9 @@ class CategoryPage extends Component {
         // console.log(this.props.searchResult.searchResult)
     }
 
-    renderItemList(){
+    renderItemList=()=>{
         if(this.props.Product.productList == '' || this.props.Select.selectedCategory == ''){
+            // console.log(this.props.Product.productList)
             return <h4> Please Wait . . .</h4>
         }
         return this.props.Product.productList.map(data=>{
@@ -63,10 +64,10 @@ class CategoryPage extends Component {
                 // console.log(data);
                 return(
                     <Col xs={6} md={4}>
-                        <Thumbnail src={MiNotebookAir13} alt="Picture Not Found">
+                        <Thumbnail src={XPS15} alt="Picture Not Found">
                             <h3>{data.ProductName} </h3>
                             <p>{data.description}</p><br/>
-                            <p>{data.ProductPrice}</p>
+                            <p>Rp. {parseInt(data.ProductPrice).toLocaleString('id')}</p>
                             <p>
                                 <Link to="/productDetails">
                                     <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
@@ -102,6 +103,7 @@ class CategoryPage extends Component {
         }
     }
     render() {
+        // console.log(this.props.Product.productList)
         if(this.props.Select.selectedCategory == ''){
             return <Redirect to='/'/>
         }

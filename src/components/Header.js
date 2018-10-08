@@ -13,9 +13,6 @@ class Header extends Component {
     state={ categoryList:[], brandList:[] }
     
     componentWillMount() {
-        // this.getRenderCategory()
-        // this.getBrands()
-
         const cookieNya = cookies.get('LoggedInUser');
         if(cookieNya !== undefined) {
             this.props.keepLogin(cookieNya);
@@ -31,26 +28,8 @@ class Header extends Component {
         else {
             this.props.cookieAdminChecked();
         }
-        // this.getRenderCategory()
     }
 
-    // componentWillReceiveProps(newProps) {
-    //     console.log(newProps)
-    //     if(newProps.auth.username === "") {
-    //         console.log("masuk pak eko")
-    //         cookies.remove('LoggedInUser');
-    //     }
-    //     if(newProps.admin.username === "") {
-    //         cookies.remove('LoggedInAdmin');
-    //     }
-    // }
-
-    // componentWillReceiveProps(newProps) {
-    //         console.log(newProps)
-    //         if(this.props.searchResult.searchResult !== null){
-    //             return <Redirect to='/searchResult'/>
-    //         }
-    //     }
 
     onLogOutClick = () => {
         this.props.onLogout();
