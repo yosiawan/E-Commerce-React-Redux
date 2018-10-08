@@ -13,7 +13,7 @@ export const getAllProduct=()=>{
         }).catch(err=>{
             dispatch({
                 type: "Get All Product Error",
-                payload: {err: 'Error'}
+                payload: {productList: [], err: 'Error'}
             })
         })
     }
