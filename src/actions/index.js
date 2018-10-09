@@ -114,7 +114,7 @@ export const getBrands = () => {
         }).catch(err=>{
             dispatch({
                 type: "Get Brand Failed",
-                payload: {err: 'Get Brand Failed'}
+                payload: {brandList: [], err: 'Get Brand Failed'}
             })
             console.log('get kategori gagal')
             console.log(err)
