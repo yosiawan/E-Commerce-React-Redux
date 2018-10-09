@@ -28,8 +28,8 @@ class homepageItemList extends Component {
         console.log(this.props.Product)
         return this.props.Product.productList.map(data=>{
             return(
-                <Col xs={6} lg={4}>
-                    <Thumbnail style={{maxHeight:500, maxWidth:500}} src={data.Img} alt="Picture Not Found">
+                <Col style={{maxHeight:"300px", maxWidth:"375px"}} xs={6} lg={4}>
+                    <Thumbnail  src={data.Img} alt="Picture Not Found">
                         <h3>{data.ProductName} </h3>
                         <p>Rp. {parseInt(data.ProductPrice).toLocaleString('id')}</p>
                         <p>
