@@ -47,11 +47,13 @@ class App extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     Please come back later if you are unable to use this website.
-                    <br/>
+                    <br/><br/>
                     Use these credentials to test user's feature :
-                    username : a
-                    password : a
                     <br/>
+                    username : a
+                    <br/>
+                    password : a
+                    <br/><br/>
                     Thank You for visiting this website!
                 </Modal.Body>
                 <Modal.Footer>
