@@ -19,9 +19,11 @@ import CheckoutPage from './components/CheckoutPage';
 import BrandPage from './components/BrandPage';
 import UserTransactionHistory from './components/UserTransactionHistory';
 import Footer from './components/Footer';
-
+import {Modal, Button} from 'react-bootstrap';
 
 class App extends Component {
+
+    state = { show: true}
 
     componentWillMount(){
         this.props.getAllProduct()
@@ -29,7 +31,35 @@ class App extends Component {
         this.props.getBrands()
     }
 
+    handleShow() {
+        this.setState({ show: true });
+    }
 
+    handleClose=()=>{
+        this.setState({ show: false });
+    }
+
+    popUp=()=>{
+        return(
+            <div>
+                <Modal.Header closeButton>
+                    <Modal.Title>This website is experiencing network unstability</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Please come back later if you are unable to use this website.
+
+                    Use these credentials to test user's feature :
+                    username : a
+                    password : a
+
+                    Thank You for visiting this website!
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this.handleClose}>Close</Button>
+                </Modal.Footer>
+            </div>
+        )
+    }
     render() {
         // console.log("render dijalankan");
         return (
@@ -49,8 +79,12 @@ class App extends Component {
                 <Route path="/brandPage" component={BrandPage}/>
                 <Route path="/userTransactionHistory" component={UserTransactionHistory}/>
             <Footer/>
-                
             </div>
+            <Modal show={this.state.show} onHide={this.handleClose}>
+                    
+                {this.popUp()}
+                
+            </Modal>
         </div>
         );
     }
