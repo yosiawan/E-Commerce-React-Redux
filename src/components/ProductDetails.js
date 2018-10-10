@@ -273,34 +273,6 @@ class ProductDetails extends Component {
             </div>
         )
         
-       
-        // return(
-        //     <div >
-        //         <br/>
-        //         <br/>
-        //         <br/>
-
-        //         {/* <h3>{this.renderContent()}</h3> */}
-
-        //         <Col className="container container-fluid" xs={12} >
-        //             <Image src={XPS15} responsive />
-        //         </Col>
-
-        //         <Col xsHidden xs={2} />
-        //         <p className='col col-xs-8'>
-        //             Lorem ipsum dolor sit amet consectectur adipiscing 
-        //             Lorem ipsum dolor sit amet consectectur adipiscing
-        //             Lorem ipsum dolor sit amet consectectur adipiscing
-        //             Lorem ipsum dolor sit amet consectectur adipiscing
-        //             Lorem ipsum dolor sit amet consectectur adipiscing
-        //         </p>
-
-        //         <Col xsHidden xs={5} />
-        //         <Button onClick={ () => this.addToCart(this.state.product[0].idproducts)} className='col-xs-2' bsStyle="primary">Buy Now</Button>
-        //         <Col xsHidden xs={5} />
-
-        //     </div>
-        // )
     }
 }
 
