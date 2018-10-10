@@ -147,10 +147,6 @@ class ProductDetails extends Component {
     }
 
     cartPopUp = () => {
-        console.log(this.props.auth)
-        if(this.state.error !== ''){
-            return  <h4>Stok Tidak Cukup</h4>
-        }
         if (this.props.auth === undefined) {
             return(
                 <div>
@@ -159,6 +155,11 @@ class ProductDetails extends Component {
                 
             )
         }
+        // console.log(this.props.auth)
+        if(this.state.error !== ''){
+            return  <h4>Stok Tidak Cukup</h4>
+        }
+        
         else if(this.props.auth.username == ''){
             return(
                 <div>

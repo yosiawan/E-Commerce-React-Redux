@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { API_URL_1 } from '../supports/api-url/apiurl';
 
 export const onLogin = (user) => {
     return(dispatch) => {
-        axios.get('http://localhost:1002/login', {
+        axios.get(API_URL_1 + 'login', {
             params: {
                 username: user.username,
                 password: user.password
@@ -26,7 +27,7 @@ export const onLogin = (user) => {
 
 export const keepLogin = (username) => {
     return(dispatch) => {
-        axios.get('http://localhost:1002/keepLogin', {
+        axios.get(API_URL_1 + 'keepLogin', {
             params: {
                 username: username
             }
@@ -62,7 +63,7 @@ export const cookieChecked = () => {
 
 export const onRegister = (user) => {
     return (dispatch) => {
-        axios.post('http://localhost:1002/register', user)
+        axios.post(API_URL_1 + 'register', user)
         .then((res) => {
             console.log(res);
             dispatch({
@@ -87,7 +88,7 @@ export const addToCart = (product) => {
 export const getCategories = () => {
     console.log('data di get')
     return(dispatch) => {
-        axios.get('http://localhost:1002/categories')
+        axios.get(API_URL_1 + 'categories')
         .then(ok=>{
             // console.log(ok.data)
             dispatch({
@@ -104,7 +105,7 @@ export const getCategories = () => {
 export const getBrands = () => {
     console.log('Brands di get')
     return(dispatch) => {
-        axios.get('http://localhost:1002/brands')
+        axios.get(API_URL_1 + 'brands')
         .then(ok=>{
             // console.log(ok.data)
             dispatch({
@@ -125,14 +126,14 @@ export const getBrands = () => {
 export const productSearch = (search) => {
     console.log('action creator search berjalan')
     return(dispatch)=>{
-        axios.get('http://localhost:1002/search',{
+        axios.get(API_URL_1 + 'search',{
             params:{ProductName: search}
         }).then((ok)=>{
             if(ok.status == 200 && ok.data.length == 0){
                 console.log("Product Not Found")
                 dispatch({
                     type: "Product Not Found",
-                    payload: {searchResult:null, err:"Product Not Found"}
+                    payload: {searchResult:[], err:"Product Not Found"}
                 })
             }else if(ok.data.length > 0){
                 console.log(ok.data)
@@ -144,7 +145,7 @@ export const productSearch = (search) => {
         }).catch(err=>{
             dispatch({
                 type: "Search Failed",
-                payload: {searchResult : "Search Error"}
+                payload: {searchResult :[], err: "Search Error"}
             })
             console.log('search gagal')
             console.log(err)
@@ -154,7 +155,7 @@ export const productSearch = (search) => {
 
 export const onAdminLogin = (user) => {
     return(dispatch) => {
-        axios.get('http://localhost:1002/adminlogin', {
+        axios.get(API_URL_1 + 'adminlogin', {
             params: {
                 username: user.username,
                 password: user.password
@@ -178,7 +179,7 @@ export const onAdminLogin = (user) => {
 
 export const keepAdminLogin = (username) => {
     return(dispatch) => {
-        axios.get('http://localhost:1002/adminkeepLogin', {
+        axios.get(API_URL_1 + 'adminkeepLogin', {
             params: {
                 username: username
             }
@@ -214,7 +215,7 @@ export const cookieAdminChecked = () => {
 
 export const onAdminRegister = (user) => {
     return (dispatch) => {
-        axios.post('http://localhost:1002/adminregister', user)
+        axios.post(API_URL_1 + 'adminregister', user)
         .then((res) => {
             if(res.data == "Username already exists"){
                 // bikin dispatch yang ngisi gstate dng error: "Username already exists"

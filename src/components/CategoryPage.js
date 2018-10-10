@@ -70,7 +70,7 @@ class CategoryPage extends Component {
                             <p>Rp. {parseInt(data.ProductPrice).toLocaleString('id')}</p>
                             <p>
                                 <Link to="/productDetails">
-                                    <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="primary">
+                                    <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="success">
                                         Details
                                     </Button>
                                 </Link>
@@ -114,9 +114,9 @@ class CategoryPage extends Component {
                 <br/>
                 <h3>{this.renderCategoryName()}</h3>
                 <span>
-                    <input className='btn' type='button' value='Sort By Name' onClick={this.sortByName}/>
+                    <input bsStyle="success" className='btn' type='button' value='Sort By Name' onClick={this.sortByName}/>
                 
-                    <input className='btn' type='button' value='Sort By Price' onClick={this.sortByPrice}/>
+                    <input bsStyle="success" className='btn' type='button' value='Sort By Price' onClick={this.sortByPrice}/>
                 </span>
                 <div>
                 {this.renderItemList()}
