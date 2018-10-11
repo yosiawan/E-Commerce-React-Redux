@@ -65,11 +65,17 @@ export const onRegister = (user) => {
     return (dispatch) => {
         axios.post(API_URL_1 + 'register', user)
         .then((res) => {
-            console.log(res);
-            dispatch({
-                type: "USER_LOGIN_SUCCESS", 
-                payload: { username: res.data.username, email: res.data.email, error: "" }
-            });
+            if(res.data == "Username already exists"){
+                dispatch({
+                    type:"Username already exists",
+                })
+            }
+            else{
+                dispatch({
+                    type: "USER_LOGIN_SUCCESS", 
+                    payload: { username: res.data.username, email: res.data.email, error: "" }
+                })
+            };
         })
         .catch((err) => {
             console.log(err);
@@ -218,13 +224,16 @@ export const onAdminRegister = (user) => {
         axios.post(API_URL_1 + 'adminregister', user)
         .then((res) => {
             if(res.data == "Username already exists"){
-                // bikin dispatch yang ngisi gstate dng error: "Username already exists"
+                dispatch({
+                    type:"Admin already exists",
+                })
             }
-            console.log(res);
-            // dispatch({
-            //     type: "ADMIN_LOGIN_SUCCESS", 
-            //     payload: { username: res.data.username, email: res.data.email, error: "" }
-            // });
+            else {
+                dispatch({
+                    type: "ADMIN_LOGIN_SUCCESS", 
+                    payload: { username: res.data.username,  error: "" }
+                });
+            } 
         })
         .catch((err) => {
             console.log(err);

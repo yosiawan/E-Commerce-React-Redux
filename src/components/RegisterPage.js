@@ -42,6 +42,7 @@ class RegisterPage extends Component {
                                     <div className="form-group">
                                         <input type="password" ref="password" className="form-control" id="inputPassword" placeholder="Password" />
                                     </div>
+                                    <div>{this.props.auth.error}</div>
                                     <input type="button" className="btn btn-primary" value="Register" onClick={this.onRegisterClick} />
     
                                 </form>

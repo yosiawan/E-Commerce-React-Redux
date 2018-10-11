@@ -6,6 +6,8 @@ export default (state = INITIAL_STATE, action) => {
             return action.payload;
         case "ADMIN_LOGIN_FAIL" :
             return { ...state, error: "Authentication Error" };
+        case "Admin already exists" :
+            return { ...state, error: "Admin already exists" };
         case "ADMIN_LOGOUT" :
             return INITIAL_STATE;
         case "COOKIES_CHECKED" :

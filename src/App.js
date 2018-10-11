@@ -43,11 +43,12 @@ class App extends Component {
         return(
             <div>
                 <Modal.Header closeButton>
-                    <Modal.Title>This website is experiencing network unstability</Modal.Title>
+                    {/* <Modal.Title>This website is experiencing network unstability</Modal.Title> */}
+                    <Modal.Title>Welcome to XMX by Yosia S.</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Please come back later if you are unable to use this website.
-                    <br/><br/>
+                    {/* Please come back later if you are unable to use this website.
+                    <br/><br/> */}
                     Use these credentials to test user's feature :
                     <br/>
                     username : a
