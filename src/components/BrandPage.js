@@ -12,21 +12,6 @@ const cookies = new Cookies();
 class CategoryPage extends Component {
     state={ alphSort:true, numSort:true };
 
-    // componentWillMount(){
-    //     this.getProductList();
-    // }
-    
-    // getProductList(){
-    //     var selectedProduct = cookies.get('SelectedCategory')
-    //     console.log(selectedProduct)
-    //     Axios.get("http://localhost:1002/categories/" + selectedProduct)
-    //     .then(ok=>{
-    //         // console.log(ok)
-    //         this.setState({products:ok.data})
-    //         // console.log(this.state.products)
-    //     })
-    // }
-
     selectedProduct(id){
         cookies.set('SelectedProduct', id, { path: '/' });
     }
@@ -39,7 +24,6 @@ class CategoryPage extends Component {
             this.props.Product.productList.sort((a,b)=>{return a.ProductName < b.ProductName;})
             this.setState({alphSort:true})
         }
-        // console.log(this.props.searchResult.searchResult)
     }
 
     sortByPrice =()=>{
@@ -50,7 +34,6 @@ class CategoryPage extends Component {
             this.props.Product.productList.sort((a,b)=>{return b.ProductPrice - a.ProductPrice;})
             this.setState({numSort:true})
         }
-        // console.log(this.props.searchResult.searchResult)
     }
 
     renderItemList(){

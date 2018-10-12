@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import {Redirect} from 'react-router-dom';
+import { API_URL_1 } from '../supports/api-url/apiurl';
 
 var cookie = new Cookies();
 
@@ -17,7 +18,7 @@ class UserTransactionHistory extends Component{
     getTransactionHistory=()=>{
         console.log('jalan')
         console.log(cookie.get('LoggedInUser'))
-        Axios.get("http://localhost:1002/userTransactionHistory/" + cookie.get('LoggedInUser') )
+        Axios.get(API_URL_1 + "userTransactionHistory/" + cookie.get('LoggedInUser') )
         .then(ok=>{
             this.setState({UserTransactionHistory: ok.data})
             console.log(this.state.UserTransactionHistory)

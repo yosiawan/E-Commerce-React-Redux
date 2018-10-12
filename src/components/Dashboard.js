@@ -3,12 +3,13 @@ import Axios from 'axios';
 import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../supports/css/bootstrap.css'
+import { API_URL_1 } from '../supports/api-url/apiurl';
 
 class Dashboard extends Component {
     state={products:[], editedItemID:0};
 
     componentWillMount(){
-        Axios.get("http://localhost:1002/productsDetails")
+        Axios.get(API_URL_1 + "productsDetails")
         .then(ok=>{
             this.setState({products:ok.data, editedItemID : 0})
             console.log(this.state.products)
@@ -24,7 +25,7 @@ class Dashboard extends Component {
     onDeleteBtnCLick(idproducts){
         console.log(idproducts)
         if(window.confirm('Are You Sure You Want To Delete This Data?')){
-            Axios.delete('http://localhost:1002/products/' + idproducts)
+            Axios.delete(API_URL_1 + 'products/' + idproducts)
             .then((res)=>{
                 alert('Delete Success');
                 this.setState({products: res.data})
@@ -36,7 +37,7 @@ class Dashboard extends Component {
     }
     
     onAddBtnClick = () => {
-        Axios.post('http://localhost:1002/products', {
+        Axios.post(API_URL_1 + 'products', {
             ProductName: this.refs.AddProductName.value,
             ProductPrice: this.refs.AddProductPrice.value,
             // Category: this.refs.AddCategory.value,
@@ -45,7 +46,7 @@ class Dashboard extends Component {
             Storage: this.refs.AddStorage.value,
             Stock: this.refs.AddStock.value
         }).then((res)=>{
-            Axios.get("http://localhost:1002/productsDetails")
+            Axios.get(API_URL_1 + "productsDetails")
             .then(ok=>{
                 this.setState({products:ok.data, editedItemID : 0})
                 console.log(this.state.products)
@@ -64,7 +65,7 @@ class Dashboard extends Component {
 
     onSaveBtnClick=(id)=>{
         console.log(this.refs.editStock.value)
-        Axios.put(`http://localhost:1002/products/${id}`, {
+        Axios.put(API_URL_1 + `products/${id}`, {
             //fill with details
             ProductName: this.refs.editNama.value,
             ProductPrice: this.refs.editPrice.value,

@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie';
 import {Image, Col, Button, Modal} from 'react-bootstrap';
 import Axios from 'axios';
 import { addToCart } from '../actions';
+import { API_URL_1 } from '../supports/api-url/apiurl';
 
 const cookies = new Cookies();
 
@@ -21,7 +22,7 @@ class ProductDetails extends Component {
     }
     getSelectedProduct(){
         var selected = cookies.get('SelectedProduct')
-        Axios.get('http://localhost:1002/products/' + selected)
+        Axios.get(API_URL_1 + 'products/' + selected)
         .then(ok=>{
             // console.log(ok.data)
             this.setState({product:ok.data})
@@ -52,7 +53,7 @@ class ProductDetails extends Component {
         if(this.refs.amount.value < 1){
             window.alert('Jumlah Item Harus Lebih dari 0')
         }
-        Axios.post('http://localhost:1002/cart', {
+        Axios.post(API_URL_1 + 'cart', {
             idproducts, 
             ProductName, 
             ProductPrice, 
@@ -123,7 +124,7 @@ class ProductDetails extends Component {
 
     deleteItem=(id)=>{
         console.log(id)
-        Axios.delete('http://localhost:1002/cart/' + id)
+        Axios.delete(API_URL_1 + 'cart/' + id)
         .then(ok=>{
             this.setState({cart: ok.data})
         }).catch(err=>{

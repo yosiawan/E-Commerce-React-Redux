@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import {Modal, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
+import { API_URL_1 } from '../supports/api-url/apiurl';
 
 const cookies = new Cookies();
 
@@ -17,7 +18,7 @@ class CheckoutPage extends Component {
 
     getCart(){
         const cookieNya = cookies.get('LoggedInUser');
-        Axios.get(`http://localhost:1002/cart/${cookieNya}`)
+        Axios.get(API_URL_1 + `cart/${cookieNya}`)
         .then(ok=>{
             if(ok.data.length >0){
                 this.setState({cart: ok.data})
@@ -58,7 +59,7 @@ class CheckoutPage extends Component {
     checkoutFunc = () => {
         console.log(this.state.cart)
         if(this.state.cart !== ''){
-            Axios.post('http://localhost:1002/checkout', this.state.cart)
+            Axios.post(API_URL_1 + 'checkout', this.state.cart)
                 .then(ok=>{
                 console.log(ok)
                 // Cart should be emptied and user should be redirected somewhere else idk
@@ -70,7 +71,7 @@ class CheckoutPage extends Component {
 
     deleteItem=(id)=>{
         console.log(id)
-        Axios.delete('http://localhost:1002/cart/' + id)
+        Axios.delete(API_URL_1 + 'cart/' + id)
         .then(ok=>{
             this.setState({cart: ok.data})
         }).catch(err=>{
