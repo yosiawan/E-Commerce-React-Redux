@@ -73,7 +73,7 @@ export const onRegister = (user) => {
             else{
                 dispatch({
                     type: "USER_LOGIN_SUCCESS", 
-                    payload: { username: res.data.username, email: res.data.email, error: "" }
+                    payload: { username: res.data.username, error: "" }
                 })
             };
         })

@@ -9,12 +9,12 @@ const cookies = new Cookies();
 
 class RegisterPage extends Component {
 
-    componentWillReceiveProps(newProps) {
-        if(newProps.auth.username !== "") {
-            cookies.set('LoggedInUser', newProps.auth.username, { path: '/' });
-            console.log(cookies.get('LoggedInUser'))
-        }
-    }
+    // componentWillReceiveProps(newProps) {
+    //     if(newProps.auth.username !== "") {
+    //         cookies.set('LoggedInUser', newProps.auth.username, { path: '/' });
+    //         console.log(cookies.get('LoggedInUser'))
+    //     }
+    // }
 
     onRegisterClick = () => {
         this.props.onRegister({ 
