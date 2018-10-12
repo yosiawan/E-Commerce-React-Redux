@@ -4,7 +4,7 @@ import { API_URL_1 } from '../supports/api-url/apiurl';
 
 export const getAllProduct=()=>{
     return (dispatch)=>{
-        axios.get('http://localhost:1002/products')
+        axios.get(API_URL_1 + 'products')
         .then(ok=>{
             dispatch({
                 type: "Get All Product Success",
