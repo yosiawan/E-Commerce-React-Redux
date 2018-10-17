@@ -143,7 +143,7 @@ class Dashboard extends Component {
 
     render() {
         console.log(this.props.admin.username)
-        // if(this.props.admin.username !== ""){
+        if(this.props.admin.username !== ""){
             return (
                 <div>
 
@@ -193,8 +193,8 @@ class Dashboard extends Component {
                 </table> 
                 </div>
             )
-        // }
-        // return <Redirect to="/"/>
+        }
+        return <Redirect to="/"/>
     }
 }
 
