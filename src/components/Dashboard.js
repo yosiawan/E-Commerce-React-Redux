@@ -16,6 +16,12 @@ class Dashboard extends Component {
         })
     }
 
+    componentWillReceiveProps(newProps) {
+        if(newProps.admin.username == "") {
+            <Redirect to='/' />    
+        }
+    }
+
     onEditBtnCLick=(id)=>{
         console.log(id)
         this.setState( {editedItemID: id} )
