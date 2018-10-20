@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
-import { Image, Nav, Navbar, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-import { Link, Redirect } from 'react-router-dom';
+import { Nav, 
+    Navbar, 
+    NavItem, 
+    NavDropdown, 
+    MenuItem 
+} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
-import { selectBrand, selectCategory, onLogout, keepLogin, cookieChecked, onAdminLogout, keepAdminLogin, cookieAdminChecked, productSearch } from '../actions';
-import Axios from 'axios';
+import { 
+    selectBrand, 
+    selectCategory, 
+    onLogout, 
+    keepLogin, 
+    cookieChecked, 
+    onAdminLogout, 
+    keepAdminLogin, 
+    cookieAdminChecked, 
+    productSearch 
+} from '../actions';
 
 const cookies = new Cookies();
 
@@ -30,7 +44,6 @@ class Header extends Component {
         }
     }
 
-
     onLogOutClick = () => {
         this.props.onLogout();
         cookies.remove('LoggedInUser');
@@ -51,7 +64,7 @@ class Header extends Component {
                 // console.log(data)
                 return(
                     <MenuItem onClick={()=>this.props.selectCategory(data.idCategory)}>
-                        <Link to='/categoryPage'>
+                        <Link to={`/categoryPage?idCategory${data.idCategory}`}>
                             {data.Category}
                         </Link>
                     </MenuItem>
@@ -69,7 +82,7 @@ class Header extends Component {
             // console.log(data)
             return(
                 <MenuItem onClick={()=>this.props.selectBrand(data.idbrand)}>
-                    <Link to='/brandPage'>
+                    <Link to={`/brandPage?idbrand=${data.idbrand}`}>
                         {data.Brand}
                     </Link>
                 </MenuItem>
@@ -77,151 +90,91 @@ class Header extends Component {
         })
     }
 
-    // Kalau ada masalah dengan routing / otentikasi page, cek apakah menggunakan <Link> atau href='/', 
-    // metode href='/' + <MenuItem> tdk dapat digunakan pada bagian dashboard
-    // Proteksi page membutuhkan <Link> JANGAN pakai metode href
     renderNavbar = () => {
         // console.log(this.props.auth)
         if(this.props.auth.username !== "") {
-            return (<Navbar fixedTop={true} collapseOnSelect>
-                <Navbar.Header>
-                    <Navbar.Brand >
-                        <Link style={{color:'#449d44'}} to='/'>
-                            XMX
-                        </Link>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Collapse>
-                    <Nav>
-                        <NavDropdown  title="Categories" id="basic-nav-dropdown">
-                            {this.renderCategory()}
-                        </NavDropdown>
-                        <NavDropdown  title="Brands" id="basic-nav-dropdown">
-                            {this.renderBrands()}
-                        </NavDropdown>
-                        <NavItem>
-                            <input ref='Search' type='text'/>
-                        </NavItem>
-                        <NavItem onClick={()=>this.props.productSearch(this.refs.Search.value)} >
-                            <Link to='/searchResult'>
-                                Search
-                            </Link>
-                        </NavItem>
-                    </Nav>
-                    <Nav pullRight>
-                        <NavDropdown title={"Hello, " + this.props.auth.username} id="basic-nav-dropdown">
-                            <NavItem >
-                                <Link to="/checkoutPage" >
-                                    Cart
-                                </Link>
-                            </NavItem>
-                            <NavItem >
-                                <Link to="/userTransactionHistory" >
-                                    Transaction History
-                                </Link>
-                            </NavItem>
-                            <MenuItem divider />
-                            <MenuItem onSelect={this.onLogOutClick}>Log Out</MenuItem>
-                        </NavDropdown>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>);
-        } else if(this.props.admin.username !== "") {
-            return (<Navbar fixedTop={true} collapseOnSelect>
-                <Navbar.Header>
-                    <Navbar.Brand >
-                        <Link style={{color:'#449d44'}} to='/'>
-                            XMX
-                        </Link>
-                    </Navbar.Brand>
-                    <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Collapse>
-                    <Nav>
-                        <NavDropdown  title="Categories" id="basic-nav-dropdown">
-                            {this.renderCategory()}
-                        </NavDropdown>
-                        <NavDropdown  title="Brands" id="basic-nav-dropdown">
-                            {this.renderBrands()}
-                        </NavDropdown>
-                        <NavItem>
-                            <input ref='Search' type='text' />
-                        </NavItem>
-                        <NavItem onClick={()=>this.props.productSearch(this.refs.Search.value)} >
-                            <Link to='/searchResult'>
-                            <Link to ></Link>
-
-                                Search
-                            </Link>
-                        </NavItem>
-                    </Nav>
-                    <Nav pullRight>
-                        <NavDropdown title={"Hello, Admin " + this.props.admin.username} id="basic-nav-dropdown">
-                            <NavItem >
-                                <Link to="/admin" >
-                                    Dashboard
-                                </Link>
-                            </NavItem>
-                            <MenuItem divider />
-                            <MenuItem onSelect={this.onAdminLogOutClick}>Log Out Admin</MenuItem>
-                        </NavDropdown>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>);
-        }
-
-        return (
-        <Navbar fixedTop={true} collapseOnSelect>
-            <Navbar.Header >
-                <Navbar.Brand >
-                    <Link style={{color:'#449d44'}} to='/'>
-                        XMX
-                    </Link>
-                </Navbar.Brand>
-                <Navbar.Toggle />
-            </Navbar.Header>
-            <Navbar.Collapse>
-                <Nav>
-                    <NavDropdown title="Categories" id="basic-nav-dropdown">
-                        {this.renderCategory()}
-                    </NavDropdown>
-                    <NavDropdown title="Brands" id="basic-nav-dropdown">
-                        {this.renderBrands()}
-                    </NavDropdown>
-                    <NavItem>
-                        <input ref='Search' type='text' />
-                    </NavItem>
-                    <NavItem onClick={()=>this.props.productSearch(this.refs.Search.value)} >
-                        <Link to='/searchResult'>
-                            Search
-                        </Link>
-                    </NavItem>
-                </Nav>
+            return (
                 <Nav pullRight>
-                    <NavDropdown title="Login or Register" id="basic-nav-dropdown">
-                        <MenuItem >
-                            <Link to="/login" >
-                                Login
+                    <NavDropdown title={"Hello, " + this.props.auth.username} id="basic-nav-dropdown">
+                        <NavItem >
+                            <Link to="/checkoutPage" >
+                                Cart
                             </Link>
-                        </MenuItem>
+                        </NavItem>
+                        <NavItem >
+                            <Link to="/userTransactionHistory" >
+                                Transaction History
+                            </Link>
+                        </NavItem>
                         <MenuItem divider />
-                        <MenuItem >
-                            <Link to="/register" >
-                                Register
-                            </Link>
-                        </MenuItem>
+                        <MenuItem onSelect={this.onLogOutClick}>Log Out</MenuItem>
                     </NavDropdown>
                 </Nav>
-            </Navbar.Collapse>
-        </Navbar>
+            );
+        } else if(this.props.admin.username !== "") {
+            return (
+                <Nav pullRight>
+                    <NavDropdown title={"Hello, Admin " + this.props.admin.username} id="basic-nav-dropdown">
+                        <NavItem >
+                            <Link to="/admin" >
+                                Dashboard
+                            </Link>
+                        </NavItem>
+                        <MenuItem divider />
+                        <MenuItem onSelect={this.onAdminLogOutClick}>Log Out Admin</MenuItem>
+                    </NavDropdown>
+                </Nav>
+            )
+        } else return (
+            <Nav pullRight>
+                <NavDropdown title="Login or Register" id="basic-nav-dropdown">
+                    <MenuItem >
+                        <Link to="/login" >
+                            Login
+                        </Link>
+                    </MenuItem>
+                    <MenuItem divider />
+                    <MenuItem >
+                        <Link to="/register" >
+                            Register
+                        </Link>
+                    </MenuItem>
+                </NavDropdown>
+            </Nav>
         );
     }
     render() {
-        // console.log(typeof(this.props.searchResult.searchResult) !== 'string')
             return( 
                 <div>
-                    {this.renderNavbar()}
+                    <Navbar fixedTop={true} collapseOnSelect>
+                        <Navbar.Header >
+                            <Navbar.Brand >
+                                <Link style={{color:'#449d44'}} to='/'>
+                                    XMX
+                                </Link>
+                            </Navbar.Brand>
+                            <Navbar.Toggle />
+                        </Navbar.Header>
+                        <Navbar.Collapse>
+                            <Nav>
+                                <NavDropdown title="Categories" id="basic-nav-dropdown">
+                                    {this.renderCategory()}
+                                </NavDropdown>
+                                <NavDropdown title="Brands" id="basic-nav-dropdown">
+                                    {this.renderBrands()}
+                                </NavDropdown>
+                                <NavItem>
+                                    <input ref='Search' type='text' defaultValue='' />
+                                </NavItem>
+                                <NavItem onClick={()=>this.props.productSearch(this.refs.Search.value)} >
+                                    {/* <Link to={`/searchResult?search=${this.refs.Search.value}`}>
+                                        Search
+                                    </Link> */}
+                                </NavItem>
+                            </Nav>
+                            {this.renderNavbar()}
+                        </Navbar.Collapse>
+                    </Navbar>
                 </div>
             );
             
