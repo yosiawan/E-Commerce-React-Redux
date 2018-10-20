@@ -167,9 +167,9 @@ class Header extends Component {
                                     <input ref='Search' type='text' defaultValue='' />
                                 </NavItem>
                                 <NavItem onClick={()=>this.props.productSearch(this.refs.Search.value)} >
-                                    {/* <Link to={`/searchResult?search=${this.refs.Search.value}`}>
+                                    <Link to={`/searchResult`}>
                                         Search
-                                    </Link> */}
+                                    </Link>
                                 </NavItem>
                             </Nav>
                             {this.renderNavbar()}
