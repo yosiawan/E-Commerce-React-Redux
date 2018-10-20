@@ -6,13 +6,13 @@ import '../supports/css/bootstrap.css'
 import { API_URL_1 } from '../supports/api-url/apiurl';
 
 class Dashboard extends Component {
+    
     state={products:[], editedItemID:0};
 
     componentWillMount(){
         Axios.get(API_URL_1 + "productsDetails")
         .then(ok=>{
             this.setState({products:ok.data, editedItemID : 0})
-            console.log(this.state.products)
         })
     }
 
@@ -23,13 +23,10 @@ class Dashboard extends Component {
     }
 
     onEditBtnCLick=(id)=>{
-        console.log(id)
         this.setState( {editedItemID: id} )
-        console.log(this.state.editedItemID)
     }
 
     onDeleteBtnCLick(idproducts){
-        console.log(idproducts)
         if(window.confirm('Are You Sure You Want To Delete This Data?')){
             Axios.delete(API_URL_1 + 'products/' + idproducts)
             .then((res)=>{
@@ -43,21 +40,21 @@ class Dashboard extends Component {
     }
     
     onAddBtnClick = () => {
+        const { AddProductName, AddProductPrice, AddDescription, AddRAM, AddStock, AddStorage } = this.refs
+
+        // Get product sebaiknya disatukan di back-end
         Axios.post(API_URL_1 + 'products', {
-            ProductName: this.refs.AddProductName.value,
-            ProductPrice: this.refs.AddProductPrice.value,
-            // Category: this.refs.AddCategory.value,
-            Description: this.refs.AddDescription.value,
-            RAM: this.refs.AddRAM.value,
-            Storage: this.refs.AddStorage.value,
-            Stock: this.refs.AddStock.value
+            ProductName: AddProductName.value,
+            ProductPrice: AddProductPrice.value,
+            Description: AddDescription.value,
+            RAM: AddRAM.value,
+            Storage: AddStorage.value,
+            Stock: AddStock.value
         }).then((res)=>{
             Axios.get(API_URL_1 + "productsDetails")
             .then(ok=>{
                 this.setState({products:ok.data, editedItemID : 0})
-                console.log(this.state.products)
             })
-            console.log(res.data);
         }).catch((err)=>{
             alert('Error');
             console.log(err)
@@ -66,19 +63,17 @@ class Dashboard extends Component {
 
     onCancelBtnClick=()=>{
         this.setState({editedItemID: 0})
-        console.log(this.state.editedItemID)
     }
 
     onSaveBtnClick=(id)=>{
-        console.log(this.refs.editStock.value)
+        const { editDescription, editNama, editPrice, editRAM, editStock, editStorage } = this.refs
         Axios.put(API_URL_1 + `products/${id}`, {
-            //fill with details
-            ProductName: this.refs.editNama.value,
-            ProductPrice: this.refs.editPrice.value,
-            Description: this.refs.editDescription.value,
-            RAM: this.refs.editRAM.value,
-            Storage: this.refs.editStorage.value,
-            Stock: this.refs.editStock.value
+            ProductName: editNama.value,
+            ProductPrice: editPrice.value,
+            Description: editDescription.value,
+            RAM: editRAM.value,
+            Storage: editStorage.value,
+            Stock: editStock.value
         }).then((res)=>{
             alert('edit sakses');
             this.setState({products: res.data, editedItemID:0});
@@ -90,21 +85,14 @@ class Dashboard extends Component {
     }
 
     renderTabelProduct = () => {
-        // console.log('render karyawan berjalan')
         const arrJSX = this.state.products.map((products, key)=>{
-            console.log(products)
             if(this.state.editedItemID == products.idproducts){
                 return(
                     <tr key={key}>
                     <td>{products.idproducts}</td>
                     <td><input type='text' ref='editNama' defaultValue={products.ProductName}/></td>
                     <td>Rp.<input type='number' ref='editPrice'defaultValue={products.ProductPrice}/></td>
-                    <td>
-                        {/* <select ref='editCategory' >
-                            <option defaultValue={products.idCategory}>Pilih Category</option>
-                            {this.renderOptionCategory()}
-                        </select> */}
-                    </td>
+                    <td></td>
                     <td><input type='text' ref='editDescription' defaultValue={products.Description}/></td>
                     <td><input type='number' ref='editRAM'defaultValue={products.RAM}/></td>
                     <td><input type='number' ref='editStorage'defaultValue={products.Storage}/></td>
@@ -148,7 +136,6 @@ class Dashboard extends Component {
     }
 
     render() {
-        console.log(this.props.admin.username)
         if(this.props.admin.username !== ""){
             return (
                 <div>
@@ -181,12 +168,7 @@ class Dashboard extends Component {
                         <td></td>
                         <td><input id='1' type='text' ref='AddProductName'/></td>
                         <td><input id='2'type='number' ref='AddProductPrice'/></td>
-                        <td>
-                            {/* <select id='3'ref='AddCategory'>
-                                <option value=''>Pilih Category</option>
-                                {this.renderOptionCategory()}
-                            </select> */}
-                        </td>
+                        <td></td>
                         <td><input id='4'type='text' ref='AddDescription' /></td>
                         <td><input id='5'type='number' ref='AddRAM'/></td>
                         <td><input id='6'type='number' ref='AddStorage'/></td>
@@ -194,7 +176,6 @@ class Dashboard extends Component {
                         <td>
                             <input type='button' onClick={this.onAddBtnClick} value='add'/>
                         </td>
-
                     </tfoot>
                 </table> 
                 </div>
