@@ -68,7 +68,7 @@ class UserTransactionHistory extends Component{
                 <br/>
                 <br/>
                 Your Transaction History
-                <table className='container' responsive>
+                <table className='tftable'>
                     <thead>
                         <tr >
                             <th style={{textAlign:"center"}}>ID</th>

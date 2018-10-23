@@ -5,7 +5,7 @@ import { Nav,
     NavDropdown, 
     MenuItem 
 } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { 
@@ -26,23 +26,7 @@ class Header extends Component {
 
     state={ categoryList:[], brandList:[] }
     
-    componentWillMount() {
-        const cookieNya = cookies.get('LoggedInUser');
-        if(cookieNya !== undefined) {
-            this.props.keepLogin(cookieNya);
-        }
-        else {
-            this.props.cookieChecked();
-        }
-        
-        const cookieNyaAdmin = cookies.get('LoggedInAdmin');
-        if(cookieNyaAdmin !== undefined) {
-            this.props.keepAdminLogin(cookieNyaAdmin);
-        }
-        else {
-            this.props.cookieAdminChecked();
-        }
-    }
+    
 
     onLogOutClick = () => {
         this.props.onLogout();
@@ -64,8 +48,10 @@ class Header extends Component {
                 // console.log(data)
                 return(
                     <MenuItem onClick={()=>this.props.selectCategory(data.idCategory)}>
-                        <Link to={`/categoryPage?idCategory${data.idCategory}`}>
-                            {data.Category}
+                        <Link to={`/categoryPage?idCategory=${data.idCategory}`}>
+                            <MenuItem>
+                                {data.Category}
+                            </MenuItem>
                         </Link>
                     </MenuItem>
                 )
@@ -83,9 +69,13 @@ class Header extends Component {
             return(
                 <MenuItem onClick={()=>this.props.selectBrand(data.idbrand)}>
                     <Link to={`/brandPage?idbrand=${data.idbrand}`}>
-                        {data.Brand}
+                        <MenuItem >
+                            {data.Brand}
+                        </MenuItem>
                     </Link>
                 </MenuItem>
+                
+
             )
         })
     }
@@ -143,6 +133,13 @@ class Header extends Component {
             </Nav>
         );
     }
+
+    changeLink(){
+        // this.props.history.push(`/searchResult`)
+        // this.context.history.push(`/searchResult?search=${document.getElementById('Search').value}`)
+        return <Redirect to={`/searchResult?search=${document.getElementById('Search').value}`}/>
+    }
+
     render() {
             return( 
                 <div>
@@ -164,13 +161,14 @@ class Header extends Component {
                                     {this.renderBrands()}
                                 </NavDropdown>
                                 <NavItem>
-                                    <input ref='Search' type='text' defaultValue='' />
+                                    <input ref='Search' id='Search' type='text' defaultValue='' />
                                 </NavItem>
-                                <NavItem onClick={()=>this.props.productSearch(this.refs.Search.value)} >
-                                    <Link to={`/searchResult`}>
+                                <NavItem onClick={()=>{this.props.productSearch(this.refs.Search.value), this.changeLink()}} >
+                                    {/* <Link to={`/searchResult?search=${document.getElementById('Search').value}`}> */}
                                         Search
-                                    </Link>
+                                    {/* </Link> */}
                                 </NavItem>
+                                <button onClick={()=>console.log(document.getElementById('Search').value)}>klik</button>
                             </Nav>
                             {this.renderNavbar()}
                         </Navbar.Collapse>

@@ -1,32 +1,21 @@
 import React, {Component} from 'react';
-import {Grid, Row, Col, Thumbnail, Button} from 'react-bootstrap';
+import { Col, Thumbnail, Button} from 'react-bootstrap';
+import queryString from 'query-string'
 import XPS15 from '../supports/img/XPS 15.jpg';
-import MiNotebookAir13 from '../supports/img/Mi Notebook Air 13.jpg';
 import {Link, Redirect} from 'react-router-dom';
-import Axios from 'axios';
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
+import { selectCategory } from '../actions';
 
 const cookies = new Cookies();
 
 class CategoryPage extends Component {
     state={ alphSort:true, numSort:true };
 
-    // componentWillMount(){
-    //     this.getProductList();
-    // }
+    componentWillMount(){
+        this.props.selectCategory((queryString.parse(this.props.location.search)).idCategory);
+    }
     
-    // getProductList(){
-    //     var selectedProduct = cookies.get('SelectedCategory')
-    //     console.log(selectedProduct)
-    //     Axios.get("http://localhost:1002/categories/" + selectedProduct)
-    //     .then(ok=>{
-    //         // console.log(ok)
-    //         this.setState({products:ok.data})
-    //         // console.log(this.state.products)
-    //     })
-    // }
-
     selectedProduct(id){
         cookies.set('SelectedProduct', id, { path: '/' });
     }
@@ -39,7 +28,6 @@ class CategoryPage extends Component {
             this.props.Product.productList.sort((a,b)=>{return a.ProductName < b.ProductName;})
             this.setState({alphSort:true})
         }
-        // console.log(this.props.searchResult.searchResult)
     }
 
     sortByPrice =()=>{
@@ -50,18 +38,14 @@ class CategoryPage extends Component {
             this.props.Product.productList.sort((a,b)=>{return b.ProductPrice - a.ProductPrice;})
             this.setState({numSort:true})
         }
-        // console.log(this.props.searchResult.searchResult)
     }
 
     renderItemList=()=>{
         if(this.props.Product.productList == '' || this.props.Select.selectedCategory == ''){
-            // console.log(this.props.Product.productList)
             return <h4> Please Wait . . .</h4>
         }
         return this.props.Product.productList.map(data=>{
-            // console.log(data.Category);
             if(data.Category == this.props.Select.selectedCategory){
-                // console.log(data);
                 return(
                     <Col xs={6} md={4}>
                         <Thumbnail src={XPS15} alt="Picture Not Found">
@@ -75,7 +59,6 @@ class CategoryPage extends Component {
                                     </Button>
                                 </Link>
                                 &nbsp;
-                                {/* <Button bsStyle="default">Buy</Button> */}
                             </p>
                         </Thumbnail>
                     </Col>
@@ -103,10 +86,6 @@ class CategoryPage extends Component {
         }
     }
     render() {
-        // console.log(this.props.Product.productList)
-        if(this.props.Select.selectedCategory == ''){
-            return <Redirect to='/'/>
-        }
         return(
             <div>
                 <br/>
@@ -133,4 +112,4 @@ const mapStateToProps = (state) => {
     return {Product, Select};
 }
 
-export default connect(mapStateToProps)(CategoryPage);
+export default connect(mapStateToProps, { selectCategory })(CategoryPage);

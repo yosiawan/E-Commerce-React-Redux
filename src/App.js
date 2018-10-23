@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Cookies from 'universal-cookie';
+import Axios from 'axios';
+
 import './App.css';
 import Header from './components/Header';
 import HomePage from './components/HomePage';
@@ -7,10 +11,8 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import Dashboard from './components/Dashboard';
 import ProductDetails from './components/ProductDetails';
-import Axios from 'axios';
-import { onLogout, keepLogin, cookieChecked, getCategories, getBrands } from './actions';
+import { onLogout, keepLogin, keepAdminLogin, cookieChecked, cookieAdminChecked, getCategories, getBrands } from './actions';
 import {getAllProduct} from './actions/Product'
-import { connect } from 'react-redux';
 import CategoryPage from './components/CategoryPage';
 import SearchResult from './components/SearchResult';
 import AdminLoginPage from './components/AdminLoginPage';
@@ -21,6 +23,8 @@ import UserTransactionHistory from './components/UserTransactionHistory';
 import Footer from './components/Footer';
 import {Modal, Button} from 'react-bootstrap';
 
+const cookies = new Cookies();
+
 class App extends Component {
 
     state = { show: true}
@@ -29,6 +33,40 @@ class App extends Component {
         this.props.getAllProduct()
         this.props.getCategories()
         this.props.getBrands()
+
+        const cookieNya = cookies.get('LoggedInUser');
+        if(cookieNya !== undefined) {
+            this.props.keepLogin(cookieNya);
+        }
+        else {
+            this.props.cookieChecked();
+        }
+        
+        const cookieNyaAdmin = cookies.get('LoggedInAdmin');
+        if(cookieNyaAdmin !== undefined) {
+            this.props.keepAdminLogin(cookieNyaAdmin);
+        }
+        else {
+            this.props.cookieAdminChecked();
+        }
+    }
+
+    componentWillReceiveProps(newProps) {
+        console.log(newProps)
+        if(newProps.auth){
+            if(newProps.auth.username !== "") {
+                cookies.set('LoggedInUser', newProps.auth.username, { path: '/' });
+            }else if(newProps.auth.username == "" && this.props.auth.username !== newProps.auth.username){
+                this.props.keepLogin(cookies.get('LoggedInUser'))
+            }    
+        }
+        if(newProps.admin){
+            if(newProps.admin.username !== "") {
+                cookies.set('LoggedInAdmin', newProps.admin.username, { path: '/' });
+            }else if(newProps.admin.username == "" && this.props.admin.username !== newProps.admin.username){
+                this.props.keepLogin(cookies.get('LoggedInAdmin'))
+            }
+        }
     }
 
     handleShow() {
@@ -100,4 +138,4 @@ const mapStateToProps = (state) => {
     return { auth, cart, categoryList };
 }
 
-export default withRouter(connect(mapStateToProps, { onLogout, keepLogin, cookieChecked, getBrands, getCategories, getAllProduct})(App));
+export default withRouter(connect(mapStateToProps, { onLogout, keepLogin, keepAdminLogin, cookieChecked, cookieAdminChecked, getBrands, getCategories, getAllProduct})(App));

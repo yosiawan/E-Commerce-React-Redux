@@ -9,13 +9,6 @@ const cookies = new Cookies();
 
 class AdminRegisterPage extends Component {
 
-    componentWillReceiveProps(newProps) {
-        if(newProps.admin.username !== "") {
-            cookies.set('LoggedInAdmin', newProps.admin.username, { path: '/' });
-            console.log(cookies.get('LoggedInAdmin'))
-        }
-    }
-
     onRegisterClick = () => {
         this.props.onAdminRegister({ 
             username: this.refs.username.value, 

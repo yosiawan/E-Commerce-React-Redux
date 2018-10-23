@@ -144,7 +144,7 @@ class Dashboard extends Component {
                     <br/>
                     <br/>
                 
-                <table  responsive>
+                <table className='tftable'>
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -161,7 +161,6 @@ class Dashboard extends Component {
 
                     <tbody>
                         {this.renderTabelProduct()}
-                        <th></th>
                     </tbody>
 
                     <tfoot >

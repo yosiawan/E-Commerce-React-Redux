@@ -100,7 +100,7 @@ class CheckoutPage extends Component {
                  <br/>
                  <br/>
                  <br/>
-                 <table className='container'>
+                 <table className='tftable'>
                     <thead>
                         <tr>
                             <th style={{textAlign:"center"}}>ProductName</th>

@@ -182,7 +182,7 @@ class ProductDetails extends Component {
                     <Modal.Title>Your Cart</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <table className='container'>
+                    <table className='tftable'>
                         <thead>
                             <tr>
                                 <th style={{textAlign:"center"}}>ProductName</th>

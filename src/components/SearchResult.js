@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import { Col, Thumbnail, Button} from 'react-bootstrap';
-import MiNotebookAir13 from '../supports/img/Mi Notebook Air 13.jpg';
-import XPS15 from '../supports/img/XPS 15.jpg';
 import {Link} from 'react-router-dom';
-import {productSearch } from '../actions';
 import { connect } from 'react-redux';
-import Axios from 'axios';
 import {withRouter} from 'react-router-dom'
 import Cookies from 'universal-cookie';
+import queryString from 'query-string'
+
+import XPS15 from '../supports/img/XPS 15.jpg';
+import {productSearch } from '../actions';
 
 const cookies = new Cookies();
 
@@ -15,6 +15,11 @@ class SearchResult extends Component {
     
     state={ alphSort:true, numSort:true };
     
+    componentWillMount(){
+        console.log
+        this.props.productSearch((queryString.parse(this.props.location.search)).search);
+    }
+
     selectedProduct(id){
         cookies.set('SelectedProduct', id, { path: '/' });
     }

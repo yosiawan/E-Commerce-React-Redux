@@ -1,16 +1,21 @@
 import React, {Component} from 'react';
-import {Grid, Row, Col, Thumbnail, Button} from 'react-bootstrap';
+import { Col, Thumbnail, Button} from 'react-bootstrap';
+import queryString from 'query-string'
+
 import XPS15 from '../supports/img/XPS 15.jpg';
-import MiNotebookAir13 from '../supports/img/Mi Notebook Air 13.jpg';
-import {Link, Redirect} from 'react-router-dom';
-import Axios from 'axios';
+import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
+import { selectBrand } from '../actions';
 
 const cookies = new Cookies();
 
 class CategoryPage extends Component {
     state={ alphSort:true, numSort:true };
+
+    componentWillMount(){
+        this.props.selectBrand((queryString.parse(this.props.location.search)).idbrand);
+    }
 
     selectedProduct(id){
         cookies.set('SelectedProduct', id, { path: '/' });
@@ -41,7 +46,6 @@ class CategoryPage extends Component {
             return <h4> Please Wait . . .</h4>
         }
         return this.props.Product.productList.map(data=>{
-            // console.log(data.Category);
             if(data.Brand == this.props.Select.selectedBrand){
                 console.log(data);
                 return(
@@ -57,7 +61,6 @@ class CategoryPage extends Component {
                                     </Button>
                                 </Link>
                                 &nbsp;
-                                {/* <Button bsStyle="default">Buy</Button> */}
                             </p>
                         </Thumbnail>
                     </Col>
@@ -85,10 +88,6 @@ class CategoryPage extends Component {
         
     }
     render() {
-        console.log(this.props.Select)
-        if(this.props.Select.selectedBrand == ""){
-            return <Redirect to='/'/>
-        }
         return(
             <div>
                 <br/>
@@ -118,5 +117,5 @@ const mapStateToProps = (state) => {
     return {Product, Select};
 }
 
-export default connect(mapStateToProps)(CategoryPage);
+export default connect(mapStateToProps, { selectBrand })(CategoryPage);
 ``
