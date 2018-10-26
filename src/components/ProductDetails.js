@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
-import XPS15 from '../supports/img/XPS 15 - 1.jpg';
-import Cookies from 'universal-cookie';
 import {Image, Col, Button, Modal} from 'react-bootstrap';
 import Axios from 'axios';
+import queryString from 'query-string'
+
 import { addToCart } from '../actions';
 import { API_URL_1 } from '../supports/api-url/apiurl';
-
-const cookies = new Cookies();
 
 // Add to cart is yet to be protected
 // Need to fix routing method
@@ -21,12 +19,9 @@ class ProductDetails extends Component {
         this.getSelectedProduct()
     }
     getSelectedProduct(){
-        var selected = cookies.get('SelectedProduct')
-        Axios.get(API_URL_1 + 'products/' + selected)
+        Axios.get(API_URL_1 + 'products/' + queryString.parse(this.props.location.search).idproducts)
         .then(ok=>{
-            // console.log(ok.data)
             this.setState({product:ok.data})
-            // console.log(this.state.product[0].ProductName)
         })
     }
     renderContent(){

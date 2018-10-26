@@ -3,9 +3,9 @@ import { Nav,
     Navbar, 
     NavItem, 
     NavDropdown, 
-    MenuItem 
+    MenuItem,
 } from 'react-bootstrap';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { 
@@ -67,6 +67,7 @@ class Header extends Component {
         return this.props.Brand.brandList.map(data=>{
             // console.log(data)
             return(
+                // Yang bisa diklik tombolnya bukan tulisannya
                 <MenuItem onClick={()=>this.props.selectBrand(data.idbrand)}>
                     <Link to={`/brandPage?idbrand=${data.idbrand}`}>
                         <MenuItem >
@@ -92,7 +93,7 @@ class Header extends Component {
                             </Link>
                         </NavItem>
                         <NavItem >
-                            <Link to="/userTransactionHistory" >
+                            <Link to={`/userTransactionHistory?user=${this.props.auth.username}`} >
                                 Transaction History
                             </Link>
                         </NavItem>
@@ -106,7 +107,7 @@ class Header extends Component {
                 <Nav pullRight>
                     <NavDropdown title={"Hello, Admin " + this.props.admin.username} id="basic-nav-dropdown">
                         <NavItem >
-                            <Link to="/admin" >
+                            <Link to={`/admin?admin=${this.props.admin.username}`} >
                                 Dashboard
                             </Link>
                         </NavItem>
@@ -135,10 +136,8 @@ class Header extends Component {
     }
 
     changeLink(){
-        // this.props.history.push(`/searchResult`)
-        // this.context.history.push(`/searchResult?search=${document.getElementById('Search').value}`)
-        return <Redirect to={`/searchResult?search=${document.getElementById('Search').value}`}/>
-    }
+        this.props.history.push(`/searchResult?search=${document.getElementById('Search').value}`)
+     }
 
     render() {
             return( 
@@ -164,9 +163,7 @@ class Header extends Component {
                                     <input ref='Search' id='Search' type='text' defaultValue='' />
                                 </NavItem>
                                 <NavItem onClick={()=>{this.props.productSearch(this.refs.Search.value), this.changeLink()}} >
-                                    {/* <Link to={`/searchResult?search=${document.getElementById('Search').value}`}> */}
                                         Search
-                                    {/* </Link> */}
                                 </NavItem>
                                 <button onClick={()=>console.log(document.getElementById('Search').value)}>klik</button>
                             </Nav>
@@ -189,4 +186,4 @@ const mapStateToProps = (state) => {
     return { auth, admin, searchResult, Brand, Category, Select};
 }
 
-export default connect(mapStateToProps, { onLogout, keepLogin, cookieChecked,onAdminLogout, keepAdminLogin, cookieAdminChecked, productSearch, selectCategory, selectBrand})(Header);
+export default withRouter(connect(mapStateToProps, { onLogout, keepLogin, cookieChecked,onAdminLogout, keepAdminLogin, cookieAdminChecked, productSearch, selectCategory, selectBrand})(Header));

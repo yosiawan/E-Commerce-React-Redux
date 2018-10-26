@@ -1,19 +1,11 @@
 import React, {Component} from 'react';
-import {Grid, Row, Col, Thumbnail, Button} from 'react-bootstrap';
-import XPS15 from '../supports/img/XPS 15.jpg';
-import MiNotebookAir13 from '../supports/img/Mi Notebook Air 13.jpg';
-import {Link} from 'react-router-dom';
-import Cookies from 'universal-cookie';
+import { Grid } from 'react-bootstrap';
 import { connect } from 'react-redux';
-// import { selectProduct} from '../actions';
+import ProductCard from './ProductCard';
 
-const cookies = new Cookies();
 
 class homepageItemList extends Component {
 
-    selectedProduct(id){
-        cookies.set('SelectedProduct', id, { path: '/' });
-    }
 
     renderItemList(){
         if(this.props.Product.productList == ""){
@@ -27,22 +19,7 @@ class homepageItemList extends Component {
         }
         console.log(this.props.Product)
         return this.props.Product.productList.map(data=>{
-            return(
-                <Col xs={6} lg={4}>
-                    <Thumbnail src={XPS15} alt="Picture Not Found">
-                        <h3>{data.ProductName} </h3>
-                        <p>Rp. {parseInt(data.ProductPrice).toLocaleString('id')}</p>
-                        <p>
-                            <Link to="/productDetails">
-                                <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="success">
-                                    Details
-                                </Button>
-                            </Link>
-                            &nbsp;
-                        </p>
-                    </Thumbnail>
-                </Col>
-            )
+            return <ProductCard data={data} />
         })
     }
     render() {

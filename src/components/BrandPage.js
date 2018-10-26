@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import { Col, Thumbnail, Button} from 'react-bootstrap';
 import queryString from 'query-string'
 
-import XPS15 from '../supports/img/XPS 15.jpg';
-import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import { selectBrand } from '../actions';
+import ProductCard from './ProductCard';
+
 
 const cookies = new Cookies();
 
@@ -48,23 +47,7 @@ class CategoryPage extends Component {
         return this.props.Product.productList.map(data=>{
             if(data.Brand == this.props.Select.selectedBrand){
                 console.log(data);
-                return(
-                    <Col xs={6} md={4}>
-                        <Thumbnail src={XPS15} alt="Picture Not Found">
-                            <h3>{data.ProductName} </h3>
-                            <p>{data.description}</p><br/>
-                            <p>Rp. {parseInt(data.ProductPrice).toLocaleString('id')}</p>
-                            <p>
-                                <Link to="/productDetails">
-                                    <Button  onClick={ () => this.selectedProduct(data.idproducts)} bsStyle="success">
-                                        Details
-                                    </Button>
-                                </Link>
-                                &nbsp;
-                            </p>
-                        </Thumbnail>
-                    </Col>
-                )
+                return <ProductCard data={data} />
             }
             
         })
