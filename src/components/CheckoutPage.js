@@ -23,7 +23,6 @@ class CheckoutPage extends Component {
             if(ok.data.length >0){
                 this.setState({cart: ok.data})
             }
-        // console.log(ok.data)
         })
     }
 
@@ -34,7 +33,6 @@ class CheckoutPage extends Component {
                         <td><h4>Cart</h4></td>
                         <td><h4>is</h4></td>
                         <td><h4>Empty</h4></td>
-                        <td></td>
                     </tr>
         }
         return this.state.cart.map(cart=>{
@@ -62,12 +60,18 @@ class CheckoutPage extends Component {
     }
 
     checkoutFunc = () => {
-        console.log(this.renderGrandTotal())
+        var address = () => {
+            if(this.refs.addressDetail.value == ''){
+                return this.props.auth.address
+            }else {
+                return this.refs.addressDetail.value
+            }
+        }
         var data =  [{
-                        address: this.refs.addressDetail.value, 
+                        address: address(), 
                         TransactionValue: this.renderGrandTotal(),
-                        DeliveryMethod: this.refs.delivery.value,
-                        Payment: this.refs.payment.value }, 
+                        DeliveryMethod: document.forms.delivery.delivery.value,
+                        Payment: document.forms.payment.payment.value }, 
                         this.state.cart ];
         if(this.state.cart !== ''){
             Axios.post(API_URL_1 + 'checkout', data)
@@ -76,13 +80,21 @@ class CheckoutPage extends Component {
                 }).catch(err=>{
                 console.log(err)
             })
+        }else {
+            return alert('Cart Anda Kosong')
         }
     }
 
     deleteItem=(id)=>{
-        console.log(id)
-        Axios.delete(API_URL_1 + 'cart/' + id)
-        .then(ok=>{
+        const { username } = this.props.auth
+        console.log(username)
+        Axios.delete(API_URL_1 + 'cart', {
+            params: {
+                id: id,
+                username: username
+            }
+        }).then(ok=>{
+            console.log(ok.data)
             this.setState({cart: ok.data})
         }).catch(err=>{
             console.log(err);
@@ -90,7 +102,6 @@ class CheckoutPage extends Component {
     }
 
     handleShow =()=> {
-        console.log('hendelsow berjalan')
         this.setState({ show: true });
     }
 
@@ -108,9 +119,6 @@ class CheckoutPage extends Component {
         this.setState({ addAddress: !this.state.addAddress })
     }
     render(){
-        // if(this.state.cart == ''){
-        //     return <div><br/><br/><br/><br/><h4>Your Cart is Empty</h4></div>
-        // }
         return(
              <div>
                  <br/>
@@ -126,7 +134,6 @@ class CheckoutPage extends Component {
                             <th style={{textAlign:"center"}}>Price</th>
                             <th style={{textAlign:"center"}}>Amount</th>
                             <th style={{textAlign:"center"}}>Total Price</th>
-                            <th style={{textAlign:"center"}}></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -151,18 +158,18 @@ class CheckoutPage extends Component {
                     </div>
                 </div>
                 <h4>3. Konfirmasi Metode Pengiriman Anda</h4>
-                <span >
-                    <input ref='delivery' type='radio' name='delivery' value='JNE' /> JNE <br/>
-                    <input ref='delivery' type='radio' name='delivery' value='TIKI' /> TIKI<br/>
-                    <input ref='delivery' type='radio' name='delivery' value='Go-Jek' checked /> Go-Jek <br/>
-                </span>
+                <form name='delivery'>
+                    <input  type='radio' name='delivery' value='JNE' defaultChecked/> JNE <br/>
+                    <input  type='radio' name='delivery' value='TIKI' /> TIKI<br/>
+                    <input  type='radio' name='delivery' value='Go-Jek' /> Go-Jek <br/>
+                </form>
                 <br/><br/>
                 <h4>4. Konfirmasi Metode Pembayaran Anda</h4>
-                <span >
-                    <input ref='payment' type='radio' name='payment' value='COD' /> COD <br/>
-                    <input ref='payment' type='radio' name='payment' value='Credit' /> Credit<br/>
-                    <input ref='payment' type='radio' name='payment' value='Bank Transfer' checked /> Bank Transfer<br/>
-                </span>
+                <form name='payment' >
+                    <input  type='radio' name='payment' value='COD' defaultChecked/> COD <br/>
+                    <input  type='radio' name='payment' value='Credit' /> Credit<br/>
+                    <input  type='radio' name='payment' value='Bank Transfer' /> Bank Transfer<br/>
+                </form>
                 <br/><br/>
                 <input type='button' onClick={this.checkoutBtn} value='Checkout'/>
              
@@ -183,7 +190,6 @@ class CheckoutPage extends Component {
 
 const mapStateToProps = (state) => {
     const auth = state.auth;
-    // const selectedProduct = state.selectedProduct;
     return { auth };
 }
 
