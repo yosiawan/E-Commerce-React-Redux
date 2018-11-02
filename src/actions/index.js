@@ -11,7 +11,7 @@ export const onLogin = (user) => {
         }).then(user => {
             dispatch({
                 type: "USER_LOGIN_SUCCESS", 
-                payload: { username: user.data[0].username, email: user.data[0].email, error: "" }
+                payload: { username: user.data[0].username, address: user.data[0].address, error: "" }
             });
             dispatch({
                 type: "COOKIES_CHECKED"
@@ -35,7 +35,7 @@ export const keepLogin = (username) => {
             console.log(user)
             dispatch({
                 type: "USER_LOGIN_SUCCESS", 
-                payload: { username: user.data[0].username, error: "" }
+                payload: { username: user.data[0].username, address: user.data[0].address, error: "" }
             });
             dispatch({
                 type: "COOKIES_CHECKED"
@@ -129,12 +129,43 @@ export const getBrands = () => {
     }
 };
 
+// ===================== Search Related ======================================
 export const productSearch = (search) => {
     console.log('action creator search berjalan')
     return(dispatch)=>{
         axios.get(API_URL_1 + 'search',{
             params:{ProductName: search}
         }).then((ok)=>{
+            if(ok.status == 200 && ok.data.length == 0){
+                console.log("Product Not Found")
+                dispatch({
+                    type: "Product Not Found",
+                    payload: {searchResult:[], err:"Product Not Found"}
+                })
+            }else if(ok.data.length > 0){
+                // console.log(ok.data)
+                dispatch({
+                    type: "Search Success",
+                    payload: {searchResult: ok.data}
+                })
+            }
+        }).catch(err=>{
+            dispatch({
+                type: "Search Failed",
+                payload: {searchResult :[], err: "Search Error"}
+            })
+            console.log('search gagal')
+            console.log(err)
+        })
+    }
+}
+
+export const filteredSearch = (parameter) => {
+    console.log('filter berjalan')
+
+    return(dispatch) => {
+        axios.post(API_URL_1 + `searchFilter`, parameter)
+        .then(ok => {
             if(ok.status == 200 && ok.data.length == 0){
                 console.log("Product Not Found")
                 dispatch({
@@ -159,6 +190,7 @@ export const productSearch = (search) => {
     }
 }
 
+// ========================== Admin Login =========================================
 export const onAdminLogin = (user) => {
     return(dispatch) => {
         axios.get(API_URL_1 + 'adminlogin', {
