@@ -7,7 +7,6 @@ import XPS15 from '../supports/img/XPS 15.jpg';
 class ProductCard extends Component {
     
     render() {
-        console.log(this.props)
         return(
             <Col xs={6} md={4}>
                 <Thumbnail src={XPS15} alt="Picture Not Found">

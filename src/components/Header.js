@@ -47,12 +47,8 @@ class Header extends Component {
             this.props.Category.categoryList.map(data=>{
                 // console.log(data)
                 return(
-                    <MenuItem onClick={()=>this.props.selectCategory(data.idCategory)}>
-                        <Link to={`/categoryPage?idCategory=${data.idCategory}`}>
-                            <MenuItem>
-                                {data.Category}
-                            </MenuItem>
-                        </Link>
+                    <MenuItem onClick={()=>{ this.props.selectCategory(data.idCategory), this.props.history.push(`/categoryPage?idCategory=${data.idCategory}`) }}>
+                        {data.Category}
                     </MenuItem>
                 )
             })
@@ -68,21 +64,15 @@ class Header extends Component {
             // console.log(data)
             return(
                 // Yang bisa diklik tombolnya bukan tulisannya
-                <MenuItem onClick={()=>this.props.selectBrand(data.idbrand)}>
-                    <Link to={`/brandPage?idbrand=${data.idbrand}`}>
-                        <MenuItem >
-                            {data.Brand}
-                        </MenuItem>
-                    </Link>
+                <MenuItem onClick={()=> { this.props.selectBrand(data.idbrand), this.props.history.push(`/brandPage?idbrand=${data.idbrand}`) }}>
+                    {data.Brand}
                 </MenuItem>
-                
-
             )
         })
     }
 
     renderNavbar = () => {
-        // console.log(this.props.auth)
+        console.log(this.props.auth)
         if(this.props.auth.username !== "") {
             return (
                 <Nav pullRight>
@@ -92,10 +82,8 @@ class Header extends Component {
                                 Cart
                             </Link>
                         </NavItem>
-                        <NavItem >
-                            <Link to={`/userTransactionHistory?user=${this.props.auth.username}`} >
-                                Transaction History
-                            </Link>
+                        <NavItem onClick={() => this.props.history.push(`/userTransactionHistory?user=${this.props.auth.username}`)}>
+                            Transaction History
                         </NavItem>
                         <MenuItem divider />
                         <MenuItem onSelect={this.onLogOutClick}>Log Out</MenuItem>
@@ -106,10 +94,8 @@ class Header extends Component {
             return (
                 <Nav pullRight>
                     <NavDropdown title={"Hello, Admin " + this.props.admin.username} id="basic-nav-dropdown">
-                        <NavItem >
-                            <Link to={`/admin?admin=${this.props.admin.username}`} >
-                                Dashboard
-                            </Link>
+                        <NavItem onClick={() => this.props.history.push(`/admin?admin=${this.props.admin.username}`)}>
+                            Dashboard
                         </NavItem>
                         <MenuItem divider />
                         <MenuItem onSelect={this.onAdminLogOutClick}>Log Out Admin</MenuItem>
@@ -119,16 +105,12 @@ class Header extends Component {
         } else return (
             <Nav pullRight>
                 <NavDropdown title="Login or Register" id="basic-nav-dropdown">
-                    <MenuItem >
-                        <Link to="/login" >
-                            Login
-                        </Link>
+                    <MenuItem onClick={() => this.props.history.push("/login")}>
+                        Login
                     </MenuItem>
                     <MenuItem divider />
-                    <MenuItem >
-                        <Link to="/register" >
-                            Register
-                        </Link>
+                    <MenuItem onClick={() => this.props.history.push("/register")}>
+                        Register
                     </MenuItem>
                 </NavDropdown>
             </Nav>
@@ -144,10 +126,8 @@ class Header extends Component {
                 <div>
                     <Navbar fixedTop={true} collapseOnSelect>
                         <Navbar.Header >
-                            <Navbar.Brand >
-                                <Link style={{color:'#449d44'}} to='/'>
-                                    XMX
-                                </Link>
+                            <Navbar.Brand style={{color:'#449d44'}} onClick={() => this.props.history.push("/")}>
+                                XMX
                             </Navbar.Brand>
                             <Navbar.Toggle />
                         </Navbar.Header>
@@ -165,7 +145,6 @@ class Header extends Component {
                                 <NavItem onClick={()=>{this.props.productSearch(this.refs.Search.value), this.changeLink()}} >
                                         Search
                                 </NavItem>
-                                <button onClick={()=>console.log(document.getElementById('Search').value)}>klik</button>
                             </Nav>
                             {this.renderNavbar()}
                         </Navbar.Collapse>

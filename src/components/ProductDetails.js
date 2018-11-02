@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import {Image, Col, Button, Modal} from 'react-bootstrap';
 import Axios from 'axios';
 import queryString from 'query-string'
@@ -90,11 +90,6 @@ class ProductDetails extends Component {
     }
 
     onBuyBtnClick=()=>{
-        // console.log(this.props.auth)
-        // if(this.props.auth.username == ''){
-        //     console.log('you should be redirected')
-        //     return <Redirect to='/login'/>
-        // }
         this.handleShow()
         this.addToCart(this.state.product[0].idproducts)
     }
@@ -118,9 +113,14 @@ class ProductDetails extends Component {
     }
 
     deleteItem=(id)=>{
-        console.log(id)
-        Axios.delete(API_URL_1 + 'cart/' + id)
-        .then(ok=>{
+        const { username } = this.props.auth
+        Axios.delete(API_URL_1 + 'cart', {
+            params: {
+                id: id,
+                username: username
+            }
+        }).then(ok=>{
+            console.log(ok.data)
             this.setState({cart: ok.data})
         }).catch(err=>{
             console.log(err);
@@ -199,8 +199,8 @@ class ProductDetails extends Component {
                     </table>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button >
-                        <Link to='/checkoutPage'>Checkout</Link>
+                    <Button onClick={() => this.props.history.push('/checkoutPage')}>
+                        Checkout
                     </Button>
                     <Button onClick={this.handleClose}>Continue Shopping</Button>
                 </Modal.Footer>
@@ -278,5 +278,5 @@ const mapStateToProps = (state) => {
     return { auth, selectedProduct };
 }
 
-export default connect(mapStateToProps, addToCart)(ProductDetails);
+export default withRouter(connect(mapStateToProps, addToCart)(ProductDetails));
 // export default ProductDetails;
