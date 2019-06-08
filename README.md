@@ -15,4 +15,3 @@ Leveraged Technology:
     
   Database :
     - MySQL 8.0
-    - Amazon Web Service RDS
